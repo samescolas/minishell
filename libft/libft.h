@@ -64,7 +64,7 @@ void				*ft_memset(void *b, int c, size_t len);
 int					ft_numlen(int n);
 void				ft_putchar(char c);
 void				ft_putchar_fd(char c, int fd);
-void				ft_putendl(const char *s);
+void				ft_putendl(char *s);
 void				ft_putendl_fd(const char *s, int fd);
 void				ft_padnbr(int n, int offset, char *color);
 void				ft_putnbr(int n);
