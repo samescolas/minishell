@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/02/28 18:48:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/06 14:00:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <string.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 32
+# define BUFF_SIZE 1
 
 # define DEFAULT "\x1B[0m"
 
@@ -103,7 +103,7 @@ char				*ft_strstr(const char *big, const char *little);
 char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strtrim(const char *s);
 int					ft_tolower(int c);
-int					ft_toupper(int c);
+char				ft_toupper(char c);
 int					get_next_line(const int fd, char **line);
 
 #endif

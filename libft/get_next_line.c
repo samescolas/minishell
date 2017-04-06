@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/02/28 18:49:08 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/06 14:21:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int		split_string(char **line, char *buffer, char c)
 	char	*ret;
 	char	*newline;
 
+	if (ft_strlen(*line) == 0 && ft_strlen(buffer) == 1 && *buffer == 3)
+		return (0);
 	ret = ft_strnew(ft_strlen(*line) + ft_strfind(buffer, c));
 	ft_strcpy(ret, *line);
 	free(*line);

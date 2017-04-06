@@ -1,47 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/03/24 19:36:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/06 14:25:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "minishell.h"
+#include "debug.h"
 
-static char	*prompt(char *p)
+int		start_shell(char **envp)
 {
-	char	*input;
+	char		*prompt_str;
+	char		*prompt_color;
+	char		*command_str;
+	t_command	*command;
 
-	if (p)
-		write(1, p, ft_strlen(p));
-	else
-		write(1, ">> ", 3);
-	if (get_next_line(STDIN_FILENO, &input) <= 0)
-		return (prompt(p));
-	else
-		return (input);
+	prompt_str = (void *)0;
+	prompt_color = (void *)0;
+	command_str = (void *)0;
+	command = (void *)0;
+	while ((command_str = prompt(prompt_str, prompt_color)))
+	{
+		if (ft_strlen(command_str) == 1 && command_str[0] == 3)
+			continue ;
+		command = parse_command(command_str, envp);
+		if (!command)
+			continue ;
+		if (builtin(command->path) >= 0)
+			call_builtin(command);
+		else
+			call_func(command->path, command->env);
+		ft_strdel(&command_str);
+		free_command(command);
+	}
+	ft_strdel(&prompt_str);
+	ft_strdel(&prompt_color);
+	return (0);
 }
 
-int		main(void)
+int		main(int argc, char **argv, char **envp)
 {
-	char	*command;
-	char	*p;
-	char	**args;
-
-	p = (void *)0;
-	while ((command = prompt(p)))
-	{
-		if (ft_strcmp(command, "exit") == 0)
-			break ;
-		if (ft_strncmp(command, "ps1=", 4) == 0)
-			p = ft_strjoin(&(command[4]), " ");
-		if (ft_strncmp(command, "echo", 4) == 0)
-			ft_putendl(&(command[5]));
-	}
+	turn_off_ctrl_c();
+	if (start_shell(envp) != 0)
+		write(2, "something went wrong!\n", 22);
 	return (0);
 }
