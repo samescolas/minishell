@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 14:00:33 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/10 11:35:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,5 @@ char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strtrim(const char *s);
 int					ft_tolower(int c);
 char				ft_toupper(char c);
-int					get_next_line(const int fd, char **line);
 
 #endif

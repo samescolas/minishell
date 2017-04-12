@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 14:43:26 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/07 10:38:45 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		builtin(char *command)
 {
-	char	*builtin_str[NUM_BUILTINS];
+	const char	*builtin_str[NUM_BUILTINS];
 	int		ret;
 
 	builtin_str[(ret = 0)] = "cd";

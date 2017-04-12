@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   t_command.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 14:17:20 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/11 19:31:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_command	*create_command(char *path, t_tkn *args, char **envp)
 		ret->path = ft_strdup(path);
 		ret->args = args;
 		ret->env = envp;
+		ret->builtin = 0;
 		ret->next = NULL;
 	}
 	return (ret);
@@ -54,7 +55,6 @@ void	free_command(t_command *command)
 {
 	ft_strdel(&(command->path));
 	command->path = (void *)0;
-	command->env = (void *)0;
 	command->args = (void *)0;
 	command->next = (void *)0;
 }

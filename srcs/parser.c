@@ -6,13 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 13:49:47 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/11 17:10:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_args(char *str)
+char		**get_args(char *str)
 {
 	if (ft_strchr(str, ' '))
 		return (ft_strsplit(ft_strchr(str, ' ') + 1, ' '));
@@ -20,27 +20,14 @@ char	**get_args(char *str)
 		return ((void *)0);
 }
 
-int		ft_strcount(char *str, char c)
+int			ft_strcount(char *str, char c)
 {
 	if (!str || !*str)
 		return (0);
 	return ((*str == c) + ft_strcount(str + 1, c));
 }
 
-char	*get_env(char **envp, char *val)
-{
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(val);
-	while (envp[i])
-		if (ft_strncmp(envp[i++], val, len) == 0)
-			return (&(envp[i - 1][len + 1]));
-	return ((void *)0);
-}
-
-char	*expand_tilde(char *path, char **envp)
+char		*expand_tilde(char *path, char **envp)
 {
 	char	*ret;
 	char	*home;
@@ -95,13 +82,21 @@ t_command	*parse_command(char *command, char **envp)
 {
 	t_command	*ret;
 	t_tkn		*tokens;
+	char		*tmp_path;
 
 	tokens = get_tokens(command);
 	if (!tokens)
 		return ((void *)0);
-	if (builtin((char *)(tokens->data)) >= 0)
-		ret = create_command((char *)(tokens->data), tokens->next, envp);
+	if (builtin(tokens->data) >= 0)
+		ret = create_command(tokens->data, tokens->next, envp);
+	else if ((tmp_path = find_path(tokens->data, envp)))
+		ret = create_command(tmp_path, tokens, envp);
 	else
-		ret = create_command(find_path(tokens->data, envp), tokens->next, envp);
+	{
+		write(2, "sftsh: command not found: ", 26);
+		write(2, tokens->data, tokens->size);
+		write(2, "\n", 1);
+		return ((void *)0);
+	}
 	return (ret);
 }

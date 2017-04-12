@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 09:48:00 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 14:04:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/10 11:42:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	turn_off_ctrl_c(void)
 	atexit(reset_settings);
 	tcgetattr(STDIN_FILENO, &updated_settings);
 	updated_settings.c_iflag &= ~(IXON);
-	updated_settings.c_lflag &= ~(ISIG | ICANON);
+	updated_settings.c_lflag &= ~(ISIG | ECHO | ICANON);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &updated_settings);
 }

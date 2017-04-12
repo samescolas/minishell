@@ -1,26 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   brackets.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/07 10:27:37 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/07 10:31:52 by sescolas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-static int	is_close_bracket(char c)
-{
-	return (c == ')' || c == ']' || c == '}');
-}
-
-static int	is_open_bracket(char c)
-{
-	return (c == '(' || c == '[' || c == '{');
-}
-
-static int	is_bracket(char c)
-{
-	return (is_open_bracket(c) || is_close_bracket(c));
-}
 
 static int	matching_brackets(char b1, char b2)
 {
 	if (is_open_bracket(b1) && is_close_bracket(b2))
-		return ((b1 == '(' && b2 == ')') || (b1 == '[' && b2 == ']') || (b1 == '{' && b2 == '}'));
+		return ((b1 == '(' && b2 == ')') || (b1 == '[' && b2 == ']'));
 	else
-		return ((b1 == ')' && b2 == '(') || (b1 == ']' && b2 == '[') || (b1 == '}' && b2 == '{'));
+		return ((b1 == ')' && b2 == '(') || (b1 == ']' && b2 == '['));
 }
 
 static char	brack_pop(char stack[MAX_DEPTH], int *ix)

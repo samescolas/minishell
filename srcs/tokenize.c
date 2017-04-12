@@ -6,12 +6,18 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 13:39:33 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/11 16:03:23 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "debug.h"
+
+static void	print_error_message(void)
+{
+	write(2, "invalid brackets found\n", 23);
+	exit(0);
+}
 
 int		is_valid_command(char *command)
 {
@@ -47,12 +53,6 @@ static t_tkn	*tokenize_command(char *command)
 			++i;
 	}
 	return (ret);
-}
-
-static void	print_error_message(void)
-{
-	write(2, "invalid brackets found\n", 23);
-	exit(0);
 }
 
 t_tkn		*get_tokens(char *command)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   t_list.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/03/24 19:36:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/10 17:33:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,35 @@ t_tkn	*create_list_item(void *data, size_t size)
 			ft_memcpy(ret->data, data, size);
 		}
 		ret->size = size;
+		ret->prev = NULL;
 		ret->next = NULL;
 	}
 	return (ret);
+}
+
+void	insert_list(t_tkn **list, t_tkn *node, int (*cmp)(t_tkn *, t_tkn *))
+{
+	t_tkn	*tmp;
+
+	if (!list || !*list)
+		*list = node;
+	else
+	{
+		tmp = *list;
+		while (tmp->next)
+		{
+			if (cmp(tmp, node) < 0)
+				tmp = tmp->next;
+			else
+			{
+				node->prev = tmp->prev;
+				node->prev->next = node;
+				node->next = tmp->next->next;
+				tmp->prev = node;
+				break ;
+			}
+		}
+	}
 }
 
 void	append_list(t_tkn **list, t_tkn *node)
@@ -46,6 +72,7 @@ void	append_list(t_tkn **list, t_tkn *node)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = node;
+		node->prev = tmp;
 	}
 	tmp = (void *)0;
 }

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/06 14:25:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/11 15:46:44 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,12 @@ int		start_shell(char **envp)
 	command = (void *)0;
 	while ((command_str = prompt(prompt_str, prompt_color)))
 	{
-		if (ft_strlen(command_str) == 1 && command_str[0] == 3)
-			continue ;
-		command = parse_command(command_str, envp);
-		if (!command)
+		if (!(command = parse_command(command_str, envp)))
 			continue ;
 		if (builtin(command->path) >= 0)
 			call_builtin(command);
 		else
-			call_func(command->path, command->env);
+			exec_command(command);
 		ft_strdel(&command_str);
 		free_command(command);
 	}
@@ -43,10 +40,41 @@ int		start_shell(char **envp)
 	return (0);
 }
 
+void	restore_env(char **envp)
+{
+	static char	**copy;
+	int			i;
+
+	i = 0;
+	if (envp == (void *)0)
+	{
+		while (copy[i])
+		{
+			envp[i] = copy[i];
+			++i;
+		}
+	}
+	else
+	{
+		while (envp[i])
+			++i;
+		copy = (char **)malloc((i + 1) * sizeof(char *));
+		i = 0;
+		while (envp[i])
+		{
+			copy[i] = ft_strdup(envp[i]);
+			++i;
+		}
+		copy[i] = (void *)0;	
+	}
+}
+
 int		main(int argc, char **argv, char **envp)
 {
 	turn_off_ctrl_c();
+	restore_env(envp);
 	if (start_shell(envp) != 0)
 		write(2, "something went wrong!\n", 22);
+	restore_env((void *)0);
 	return (0);
 }

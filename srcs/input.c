@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/03/24 19:36:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/11 12:45:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ char	*prompt(char *p, char *color)
 	char	*input;
 
 	ft_padstr((p ? p : ">>"), 1, color);
-	if (get_next_line(STDIN_FILENO, &input) <= 0)
+	if (get_line(&input) <= 0)
 		return (prompt(p, color));
 	else
 		return (input);
 }
+
 
 char	*get_color(char *arg)
 {
@@ -38,7 +39,5 @@ char	*get_color(char *arg)
 		return (BK2);
 	if (ft_strcmp(arg, "DEFAULT") == 0)
 		return (DEF);
-	sentinel("That's not a color...");
-	error:
 	return ((void *)0);
 }
