@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 19:31:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/12 16:18:30 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MAX_PATHLEN 512
 # define MAX_DEPTH
 # define NUM_BUILTINS 9
+# define BUFF_SIZE 32
 
 # define DEF "\x1B[0m"
 # define RED "\x1B[31m"
@@ -44,7 +45,7 @@ typedef struct			s_command
 {
 	char				*path;
 	char				**env;
-	int					builtin;
+	int					is_builtin;
 	t_tkn				*args;
 	struct s_command	*next;
 }						t_command;

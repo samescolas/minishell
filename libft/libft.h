@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/10 11:35:39 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/12 16:04:54 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <string.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 1
-
 # define DEFAULT "\x1B[0m"
 
 typedef struct		s_list
@@ -28,13 +26,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-
-typedef struct		s_file
-{
-	int				fd;
-	char			buffer[BUFF_SIZE + 1];
-	struct s_file	*next;
-}					t_file;
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);

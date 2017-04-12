@@ -6,12 +6,20 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 15:46:44 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/12 16:20:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "debug.h"
+
+static int	execute_command(t_command *command)
+{
+	if (builtin(command->path) >= 0)
+		call_builtin(command);
+	else
+		exec_command(command);
+}
 
 int		start_shell(char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 13:10:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/12 16:01:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void		bkspc(char *line, unsigned int *chars_copied)
 {
 	char	bkspc[3];
 
+	if (*chars_copied == 0)
+		return ;
 	bkspc[0] = 8;
 	bkspc[1] = 127;
 	bkspc[2] = 8;
@@ -65,12 +67,7 @@ int				get_line(char **line)
 		if (ft_isprint(buf))
 			display_char(buf, *line, &chars_copied);
 		if (buf == 127)
-		{
-			if (chars_copied > 0)
 				bkspc(*line, &chars_copied);
-			else
-				continue ;
-		}
 		else if (buf == '\t')
 			handle_tab(*line, &chars_copied);
 		else if (buf == 3)
@@ -86,12 +83,4 @@ int				get_line(char **line)
 		return (1);
 	else 
 		return (-1);
-	/*
-	if (ret > 0 || **line != '\0')
-		return (1);
-	else if (ret == 0)
-		return (0);
-	else
-		return (-1);
-	*/
 }

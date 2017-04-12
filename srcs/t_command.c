@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 19:31:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/12 16:12:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ void	free_commands(t_command **stack)
 		free_command(tmp);
 	*stack = (void *)0;
 }
-
