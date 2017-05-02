@@ -6,13 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/12 16:18:30 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/13 12:11:50 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include "sftsh_types.h"
 #include "../libft/libft.h"
 #include <sys/wait.h>
 #include <unistd.h>
@@ -33,59 +34,50 @@
 # define BL2 "\x1B[94m"
 # define MG2 "\x1B[95m"
 
-typedef struct			s_tkn
-{
-	void				*data;
-	size_t				size;
-	struct s_tkn		*next;
-	struct s_tkn		*prev;
-}						t_tkn;
+//void		raw_mode(void);
+//void		reset_settings(void);
 
-typedef struct			s_command
-{
-	char				*path;
-	char				**env;
-	int					is_builtin;
-	t_tkn				*args;
-	struct s_command	*next;
-}						t_command;
-
-char		*find_path(char *command, char **envp);
-int			valid_bracket(char *command);
-int			is_close_bracket(char c);
-int			is_open_bracket(char c);
-int			is_bracket(char c);
-int			get_line(char **line);
-void		autocomplete(char *text, unsigned int *cursor_position);
 char		**copy_env(char **envp);
-
 void		append_env(char ***envp, char *str);
+char		*get_env(char **envp, char *val);
+void		set_env(char **envp, char *variable, char *value);
+void		restore_env(char **envp, char **copy);
+
+int			exec_command(t_command *command);
+//t_command	*create_command(char *path, t_tkn *args, char **envp);
 void		free_command(t_command *command);
 t_command	*parse_command(char *command, char **envp);
-void		turn_off_ctrl_c(void);
-void		reset_settings(void);
+
+t_tkn		*create_list_item(void *data, size_t size);
+void		push_list(t_tkn **list, t_tkn *node);
+t_tkn		*pop_list(t_tkn **list);
+void		append_list(t_tkn **list, t_tkn *node);
+
+int			call_func(char *command, char *envp[]);
+int			builtin(char *command);
 int			call_builtin(t_command *command);
 int			sftsh_cd(t_command *command);
 int			sftsh_echo(t_command *command);
-int			sftsh_env(t_command *command);
 int			sftsh_exit(t_command *command);
-int			builtin(char *command);
+int			sftsh_env(t_command *command);
+
+void		autocomplete(char *text, unsigned int *cursor_position);
+
+char		*find_path(char *command, char **envp);
+int			valid_bracket(char *command);
+//int			read_line(char **line);
 int			is_valid_command(char *command);
 t_tkn		*get_tokens(char *command);
-t_tkn		*create_list_item(void *data, size_t size);
-void		append_list(t_tkn **list, t_tkn *node);
-int			ft_strcount(char *str, char c);
-void		push_list(t_tkn **list, t_tkn *node);
-t_tkn		*pop_list(t_tkn **list);
 void		change_dir(char *path, char **envp);
-char		*get_env(char **envp, char *val);
-void		set_env(char **envp, char *variable, char *value);
 char		*expand_tilde(char *path, char **envp);
 char		**get_args(char *str);
 char		*prompt(char *p, char *color);
 char		*get_color(char *arg);
-int			call_func(char *command, char *envp[]);
-int			exec_command(t_command *command);
-t_command	*create_command(char *path, t_tkn *args, char **envp);
+
+int			ft_strcount(char *str, char c);
+
+int			is_close_bracket(char c);
+int			is_open_bracket(char c);
+int			is_bracket(char c);
 
 #endif

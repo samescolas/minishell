@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   brackets.c                                         :+:      :+:    :+:   */
+/*   sftsh_brackets2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/07 10:27:37 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/07 10:31:52 by sescolas         ###   ########.fr       */
+/*   Created: 2017/04/12 20:26:31 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/13 17:30:09 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "sftsh_brackets.h"
 
 static int	matching_brackets(char b1, char b2)
 {

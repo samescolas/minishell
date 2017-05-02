@@ -6,12 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/10 17:33:36 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:42:07 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "debug.h"
+#include "../libft/libft.h"
+#include "sftsh_types.h"
 
 t_tkn	*create_list_item(void *data, size_t size)
 {
@@ -97,5 +97,30 @@ t_tkn	*pop_list(t_tkn **list)
 		return (ret);
 	ret = *list;
 	*list = (*list)->next;
+	return (ret);
+}
+
+char	**list_to_arr(t_tkn *list)
+{
+	t_tkn	*tmp;
+	char	**ret;
+	int		i;
+
+	i = 0;
+	tmp = list;
+	while (tmp)
+	{
+		++i;
+		tmp = tmp->next;
+	}
+	if (!(ret = (char **)malloc((i + 1) * sizeof(char *))))
+		return (ret);
+	i = 0;
+	while (list)
+	{
+		ret[i++] = ft_strdup(list->data);
+		list = list->next;
+	}
+	ret[i] = (void *)0;
 	return (ret);
 }

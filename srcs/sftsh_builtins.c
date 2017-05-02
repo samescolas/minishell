@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   sftsh_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/07 10:38:45 by sescolas         ###   ########.fr       */
+/*   Created: 2017/04/13 17:04:17 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/19 09:57:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "debug.h"
+#include "../libft/libft.h"
+#include "sftsh_builtins.h"
+#include "sftsh_types.h"
 
 int		builtin(char *command)
 {
@@ -32,18 +33,17 @@ int		builtin(char *command)
 			return (ret - 1);
 	return (-1);
 }
-
+/*
 int		call_builtin(t_command *command)
 {
 	int	(*builtins[NUM_BUILTINS])(t_command *);
-	int	ix;
 
 	builtins[0] = &sftsh_cd;
 	builtins[1] = &sftsh_env;
 	builtins[7] = &sftsh_echo;
 	builtins[8] = &sftsh_exit;
-	ix = builtin(command->path);
-	if (ix < NUM_BUILTINS)
-		return ((builtins[ix])(command));
+	if (command->builtin < NUM_BUILTINS)
+		return ((builtins[command->builtin])(command));
 	return (0);
 }
+*/

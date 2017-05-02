@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sftsh_find_x.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 13:11:00 by sescolas         ###   ########.fr       */
+/*   Created: 2017/04/12 20:56:08 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/13 17:21:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sftsh_raw_mode.h"
-#include "sftsh_env.h"
-#include "sftsh.h"
-#include "minishell.h"
+#ifndef SFTSH_FIND_X_H
+# define SFTSH_FIND_X_H
 
-int		main(int argc, char **argv, char **envp)
-{
-	char	**env_cpy;
-	char	**tokens;
-	int		i;
+# define MAX_PATHLEN 512
 
-	raw_mode();
-	env_cpy = copy_env(envp);
-	if (sftsh(envp) != 0)
-		write(2, "something went wrong!\n", 22);
-	restore_env(envp, env_cpy); /* I'm not sure this is actually even necessary. */
-	return (0);
-}
+char	*find_path(char *command, char **envp);
+
+#endif

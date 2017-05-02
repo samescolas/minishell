@@ -6,13 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 10:08:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 18:59:44 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/19 09:57:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "debug.h"
 
+/*
 int		sftsh_echo(t_command *command)
 {
 	t_tkn	*tmp;
@@ -28,7 +29,7 @@ int		sftsh_echo(t_command *command)
 		tmp = tmp->next;
 	while (tmp)
 	{
-		/* it would be cool for this to be in color if something existed in *(command->env) */
+		// it would be cool for this to be in color if something existed in *(command->env)
 		ft_padstr((char *)(tmp->data), 1, (void *)0);
 		tmp = tmp->next;
 	}
@@ -75,11 +76,11 @@ int		sftsh_exit(t_command *command)
 {
 	if (command->args != NULL && ft_strcmp(command->args->data, "help") == 0)
 		print_help("exit");
-	/* free_command(&command); */
+	// free_command(&command);
 	exit(0);
 }
 
-/*
+
 static void		set_env_val(char ***env, char *str)
 {
 	char	*variable;
@@ -112,4 +113,5 @@ int		sftsh_env(t_command *command)
 	while (*envp)
 		ft_putendl(*(envp++));
 	return (0);
-}*/
+}
+*/

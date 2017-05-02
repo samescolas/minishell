@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sftsh_exec.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 13:11:00 by sescolas         ###   ########.fr       */
+/*   Created: 2017/04/18 19:33:36 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/19 20:18:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sftsh_raw_mode.h"
-#include "sftsh_env.h"
-#include "sftsh.h"
-#include "minishell.h"
+#ifndef SFTSH_EXEC_H
+# define SFTSH_EXEC_H
 
-int		main(int argc, char **argv, char **envp)
-{
-	char	**env_cpy;
-	char	**tokens;
-	int		i;
+# include <unistd.h>
+# include "../libft/libft.h"
 
-	raw_mode();
-	env_cpy = copy_env(envp);
-	if (sftsh(envp) != 0)
-		write(2, "something went wrong!\n", 22);
-	restore_env(envp, env_cpy); /* I'm not sure this is actually even necessary. */
-	return (0);
-}
+typedef struct  s_command t_command;
+
+int		sftsh_exec(t_command *command);
+
+#endif

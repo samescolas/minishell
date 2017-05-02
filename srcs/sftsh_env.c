@@ -5,79 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 12:50:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/11 19:42:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
+/*   Updated: 2017/04/13 12:43:59 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		set_env_val(char ***env, char *str)
+char	*get_env(char **envp, char *val)
 {
-	char	*var;
+	int		i;
 	int		len;
 
-	len = ft_strfind(str, '=') - 1;
-	var = ft_strsub(str, 0, len + 1);
-	if (get_env(*env, var))
-		set_env(*env, var, &str[len + 2]);
-	else
-		append_env(env, str);
+	i = -1;
+	len = ft_strlen(val);
+	while (envp[++i])
+		if (ft_strncmp(envp[i], val, len) == 0 && envp[i][len] == '=')
+			return (&(envp[i][len + 1]));
+	return ((void *)0);
 }
 
-int				sftsh_env(t_command *command)
+void	append_env(char ***envp, char *str)
 {
-	char		**envp;
-	t_tkn		*arg;
-	t_command	*new_cmd;
+	int		i;
+	int		len;
+	char	*tmp;
+	char	**ret;
 
-	arg = command->args;
-	envp = copy_env(command->env);
-	while (arg)
-	{
-		if (((char *)(arg->data))[0] == '-')
-		{
-			if (!arg->next)
-				return (0);
-			if (((char *)(arg->data))[1] == 'P')
-			{
-				arg = arg->next;
-				set_env(envp, "PATH", arg->data);
-			}
-		}
-		else if (ft_strchr(arg->data, '='))
-			set_env_val(&envp, arg->data);
-		else /*((builtin(arg->data) >= 0) || (find_path(arg->data, envp)))*/
+	ret = (void *)0;
+	len = ft_strfind(str, '=') - 1;
+	i = 0;
+	while ((*envp)[i])
+		++i;
+	if (!(ret = (char **)malloc((i + 2) * sizeof(char *))))
+		return ;
+	i = -1;
+	while ((*envp)[++i])
+		ret[i] = (*envp)[i];
+	ret[i++] = str;
+	ret[i] = (void *)0;
+	*envp = ret;
+}
+
+void	set_env(char **envp, char *var, char *value)
+{
+	int		i;
+	int		len;
+	char	*ret;
+	char	*tmp;
+
+	len = ft_strlen(var);
+	ret = ft_strnew(len + ft_strlen(value) + 1);
+	ft_strcpy(ret, var);
+	ft_strcat(ret, "=");
+	ft_strcat(ret, value);
+	i = -1;
+	while (envp[++i])
+		if (ft_strncmp(var, envp[i], len) == 0 && envp[i][len] == '=')
 			break ;
-		arg = arg->next;
-	}
-	if (arg)
+	tmp = envp[i];
+	envp[i] = ret;
+	ft_strdel(&tmp); /* this may cause segfaults if used on envp passed in main rather than a copy */
+}
+
+char		**copy_env(char **envp)
+{
+	char	**ret;
+	int		len;
+
+	len = 0;
+	while (envp[len])
+		++len;
+	if ((ret = (char **)malloc((len + 1) * sizeof(char *))))
 	{
-		command->path = arg->data;
-		command->env = envp;
-		command->next = NULL;
-		if (builtin(arg->data) >= 0)
-		{
-			command->args = arg->next;
-			call_builtin(command);
-		}
-		else
-		{
-			if (!(command->path = find_path(command->path, command->env)))
-			{
-				write(2, "env: ", 5);
-				write(2, arg->data, ft_strlen(arg->data));
-				write(2, ": No such file or directory\n", 28);
-			}
-			else
-			{
-				command->args = arg;
-				exec_command(command);
-			}
-		}
+		len = -1;
+		while (envp[++len])
+			ret[len] = ft_strdup(envp[len]);
+		ret[len] = (void *)0;
 	}
-	else
-		while (*envp)
-			ft_putendl(*(envp++));
-	return (0);
+	return (ret);
+}
+
+void		restore_env(char **env, char **copy)
+{
+	int		i;
+
+	i = -1;
+	while (env[++i])
+		env[i] = copy[i];
 }

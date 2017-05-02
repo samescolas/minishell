@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/12 16:04:54 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/04/13 12:10:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void				ft_padstr(const char *s, int offset, char *color);
 void				ft_putstr(const char *s);
 void				ft_putstr_fd(const char *s, int fd);
 int					ft_sqrt(int n);
+void				ft_strarrmap(char **arr, char *(*f)(char *));
 char				*ft_strcat(char *s1, const char *s2);
+int					ft_strcount(char *str, char c);
 char				*ft_strchr(const char *s, int c);
 void				ft_strclr(char *s);
 int					ft_strcmp(const char *s1, const char *s2);
