@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 20:13:31 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 12:36:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,7 @@ void	append_env(char ***envp, char *var, char *val)
 	ret[i] = (void *)0;
 	*envp = ret;
 }
-/*
-void	append_env(char ***envp, char *str)
-{
-	int		i;
-	int		len;
-	char	*tmp;
-	char	**ret;
 
-	ret = (void *)0;
-	len = ft_strfind(str, '=') - 1;
-	i = 0;
-	while ((*envp)[i])
-		++i;
-	if (!(ret = (char **)malloc((i + 2) * sizeof(char *))))
-		return ;
-	i = -1;
-	while ((*envp)[++i])
-		ret[i] = (*envp)[i];
-	ret[i++] = str;
-	ret[i] = (void *)0;
-	*envp = ret;
-}
-*/
 void	set_env(char **envp, char *var, char *value)
 {
 	int		i;
@@ -86,7 +64,6 @@ void	set_env(char **envp, char *var, char *value)
 			break ;
 	tmp = envp[i];
 	envp[i] = ret;
-	ft_strdel(&tmp); /* this may cause segfaults if used on envp passed in main rather than a copy */
 }
 
 char		**copy_env(char **envp)

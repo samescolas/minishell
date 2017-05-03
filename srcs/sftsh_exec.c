@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 15:52:37 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:15:48 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static void	print_error_execve(char *str)
 {
-	write(1, "psh: no such file or directory: ", 32);
+	write(1, "psh: command not found: ", 24);
 	ft_putendl(str);
 }
 

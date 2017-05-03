@@ -6,10 +6,11 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 15:48:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:26:27 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "sftsh_read_line.h"
 #include "sftsh_tokenize.h"
 #include "sftsh_parse.h"
@@ -42,6 +43,30 @@ void	display_command(t_command command)
 	ft_putendl("");
 }
 
+char	*get_color(char *color)
+{
+	if (ft_strcmp(color, "default") == 0 || ft_strcmp(color, "def") == 0)
+		return (ft_strdup(DEF));
+	else if (ft_strcmp(color, "red") == 0 || ft_strcmp(color, "r") == 0)
+		return (ft_strdup(RED));
+	else if (ft_strcmp(color, "blue") == 0 || ft_strcmp(color, "b") == 0)
+		return (ft_strdup(BLU));
+	else if (ft_strcmp(color, "magenta") == 0 || ft_strcmp(color, "m") == 0)
+		return (ft_strdup(MAG));
+	else if (ft_strcmp(color, "c2") == 0)
+		return (ft_strdup(CY2));
+	else if (ft_strcmp(color, "c3") == 0)
+		return (ft_strdup(CY3));
+	else if (ft_strcmp(color, "bk2") == 0)
+		return (ft_strdup(BK2));
+	else if (ft_strcmp(color, "bl2") == 0)
+		return (ft_strdup(BL2));
+	else if (ft_strcmp(color, "m2") == 0)
+		return (ft_strdup(MG2));
+	else
+		return ((void *)0);
+}
+
 int		sftsh(char **envp)
 {
 	char		*prompt_str;
@@ -55,8 +80,14 @@ int		sftsh(char **envp)
 	command_str = (void *)0;
 	command = (void *)0;
 	while ((command_str = prompt(prompt_str, prompt_color)))
-		if ((command = parse(tokenize(command_str), envp)))
+	{
+		if (ft_strncmp(command_str, "ps1=", 4) == 0)
+			prompt_str = ft_strdup(&command_str[4]);
+		else if (ft_strncmp(command_str, "col=", 4) == 0)
+			prompt_color = get_color(&command_str[4]);
+		else if ((command = parse(tokenize(command_str), envp)))
 			sftsh_exec(command);
+	}
 	ft_strdel(&prompt_str);
 	ft_strdel(&prompt_color);
 	return (0);

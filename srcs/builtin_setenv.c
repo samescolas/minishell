@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 19:31:04 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 21:29:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:54:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 int		sftsh_setenv(t_command *command)
 {
 	char	*tmp;
+	int		num_items;
+	int		i;
 
-	if (command->num_args > 2)
+	i = 1;
+	num_items = (command->num_args - 1) / 2;
+	while (num_items--)
 	{
-		if ((tmp = get_env(command->envp, command->args[0])))
-		{
-			set_env(command->envp, command->args[0], command->args[1]);
-			ft_strdel(&tmp);
-		}
+		if ((tmp = get_env(command->envp, command->args[i])))
+			set_env(command->envp, command->args[i], command->args[i + 1]);
 		else
-			append_env(&command->envp, command->args[0], command->args[1]);
+			append_env(&command->envp, command->args[i], command->args[i + 1]);
+		i += 2;
 	}
-	else
+	if (command->num_args == 1)
 		while (*(command->envp))
 			ft_putendl(*(command->envp++));
 	return (0);

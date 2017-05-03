@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:02:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 21:24:11 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 12:17:53 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		call_builtin(t_command *command);
 int		sftsh_cd(t_command *command);
 int		sftsh_env(t_command *command);
 int		sftsh_setenv(t_command *command);
+int		sftsh_unsetenv(t_command *command);
 int		sftsh_echo(t_command *command);
 int		sftsh_exit(t_command *command);
 

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 21:40:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:07:05 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char		*expand_tilde(char *path, char **envp)
 		else
 			ret[j++] = path[i];
 	}
-	//ft_strdel(&path); /* this may be a bad idea */
+	ft_strdel(&path); /* this may be a bad idea */
+	ft_putendl(ret);
 	return (ret);
 }
 
