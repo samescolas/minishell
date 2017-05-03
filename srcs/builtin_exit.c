@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sftsh_env.h                                        :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/13 12:33:35 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 20:13:54 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/02 20:30:15 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/02 21:48:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SFTSH_ENV_H
-# define SFTSH_ENV_H
+#include "minishell.h"
 
-char	*get_env(char **envp, char *val);
-void	set_env(char **envp, char *key, char *val);
-void	append_env(char ***envp, char *key, char *val);
-char	**copy_env(char **envp);
-void	restore_env(char **envp, char **copy);
+static void	print_help(void)
+{
+	ft_putendl("there's no such thing as a stupid question");
+}
 
-#endif
+int		sftsh_exit(t_command *command)
+{
+	if (command->num_args > 0 && ft_strcmp((command->args)[0], "help") == 0)
+		print_help();
+	exit(0);
+}

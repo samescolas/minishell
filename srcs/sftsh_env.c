@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 12:43:59 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/02 20:13:31 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,27 @@ char	*get_env(char **envp, char *val)
 	return ((void *)0);
 }
 
+void	append_env(char ***envp, char *var, char *val)
+{
+	char	**ret;
+	int		i;
+
+	i = 0;
+	while ((*envp)[i])
+		++i;
+	if (!(ret = (char **)malloc((i + 2) * sizeof(char *))))
+		return ;
+	i = -1;
+	while ((*envp)[++i])
+		ret[i] = (*envp)[i];
+	ret[i] = ft_strnew(ft_strlen(var) + ft_strlen(val) + 1);
+	ft_strcpy(ret[i], var);
+	ft_strncat(ret[i], "=", 1);
+	ft_strcat(ret[i++], val);
+	ret[i] = (void *)0;
+	*envp = ret;
+}
+/*
 void	append_env(char ***envp, char *str)
 {
 	int		i;
@@ -46,7 +67,7 @@ void	append_env(char ***envp, char *str)
 	ret[i] = (void *)0;
 	*envp = ret;
 }
-
+*/
 void	set_env(char **envp, char *var, char *value)
 {
 	int		i;

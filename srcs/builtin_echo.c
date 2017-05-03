@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sftsh_env.h                                        :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/13 12:33:35 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 20:13:54 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/02 20:26:25 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/02 21:59:32 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SFTSH_ENV_H
-# define SFTSH_ENV_H
+#include "minishell.h"
 
-char	*get_env(char **envp, char *val);
-void	set_env(char **envp, char *key, char *val);
-void	append_env(char ***envp, char *key, char *val);
-char	**copy_env(char **envp);
-void	restore_env(char **envp, char **copy);
+int		sftsh_echo(t_command *command)
+{
+	int		no_newline;
+	int		ix;
 
-#endif
+	if (command->num_args == 0)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
+	ix = 1;
+	if ((no_newline = (ft_strcmp(command->args[ix], "-n") == 0)))
+		ix = 2;
+	while (command->args[ix])
+		ft_padstr(command->args[ix++], 1, (void *)0);
+	if (!no_newline)
+		write(1, "\n", 1);
+	return (0);
+}

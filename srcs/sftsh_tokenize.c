@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/18 16:32:08 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/02 14:33:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,6 @@ static void		add_string(char **list, char *str, size_t size, int *ix)
 		list[(*ix)++] = ft_strdup(";");
 	}
 }
-/*
-static char		*create_string(char *str, size_t size)
-{
-	char	*ret;
-
-	ret = (void *)0;
-	if (!(ret = ft_strnew(size)))
-		return (ret);
-	ft_strncpy(ret, str, size);
-	return (ret);
-}
-*/
 
 char		**tokenize(char *command)
 { 

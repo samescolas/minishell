@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:04:17 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/19 09:57:36 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/02 21:29:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sftsh_builtins.h"
 #include "sftsh_types.h"
 
-int		builtin(char *command)
+int		find_builtin(char *command)
 {
 	const char	*builtin_str[NUM_BUILTINS];
 	int		ret;
@@ -33,17 +33,17 @@ int		builtin(char *command)
 			return (ret - 1);
 	return (-1);
 }
-/*
+
 int		call_builtin(t_command *command)
 {
 	int	(*builtins[NUM_BUILTINS])(t_command *);
 
 	builtins[0] = &sftsh_cd;
 	builtins[1] = &sftsh_env;
+	builtins[3] = &sftsh_setenv;
 	builtins[7] = &sftsh_echo;
 	builtins[8] = &sftsh_exit;
-	if (command->builtin < NUM_BUILTINS)
-		return ((builtins[command->builtin])(command));
+	if (command->builtin_id < NUM_BUILTINS)
+		return ((builtins[command->builtin_id])(command));
 	return (0);
 }
-*/

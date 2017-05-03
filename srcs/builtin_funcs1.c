@@ -6,15 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 10:08:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/19 09:57:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/02 20:16:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "debug.h"
 
-/*
-int		sftsh_echo(t_command *command)
+/*int		sftsh_echo(t_command *command)
 {
 	t_tkn	*tmp;
 	int		no_newline;
@@ -79,7 +78,6 @@ int		sftsh_exit(t_command *command)
 	// free_command(&command);
 	exit(0);
 }
-
 
 static void		set_env_val(char ***env, char *str)
 {
