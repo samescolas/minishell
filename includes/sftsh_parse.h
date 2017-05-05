@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:22:57 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/19 10:03:21 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/04 16:49:25 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 
 typedef struct s_command t_command;
 
-t_command	*parse(char **tokens, char **envp);
+t_command	*parse(char *tokens, char ***envp);
 
 #endif

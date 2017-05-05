@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 14:33:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:03:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,8 @@ static void		print_error_message(void)
 	exit(0);
 }
 
-static int		is_valid_command(char *command)
-{
-	if (ft_strcount(command, '\'') % 2 || ft_strcount(command, '"') % 2)
-		return (0);
-	return (1);
-}
-
 static int		count_tokens(char *command)
-{ 
+{
 	int		num_tokens;
 	int		i;
 	int		offset;
@@ -67,35 +60,40 @@ static void		add_string(char **list, char *str, size_t size, int *ix)
 		ret[size - 1] = '\0';
 		list[(*ix)++] = ft_strdup(";");
 	}
+	if (!str[size])
+		list[(*ix)] = (void *)0;
 }
 
-char		**tokenize(char *command)
-{ 
+static void		add_token(char **list, char *command, int *ix)
+{
+	if (command[ix[0]] == '"' || command[ix[0]] == '\'')
+	{
+		add_string(list, &(command[ix[0] + 1]),\
+			ft_strfind(&(command[ix[0] + 1]), command[ix[0]]), &ix[1]);
+		ix[0] += ft_strfind(&(command[ix[0] + 1]), command[ix[0]]) + 2;
+	}
+	else
+	{
+		add_string(list, &command[ix[0]],\
+				ft_strfind(&command[ix[0]], ' '), &ix[1]);
+		ix[0] += ft_strfind(&(command[ix[0]]), ' ');
+	}
+	while (command[ix[0]] && command[ix[0]] == ' ')
+		++ix[0];
+}
+
+char			**tokenize(char *command)
+{
 	char	**ret;
-	int		i;
-	int		j;
+	int		ix[2];
 
 	if (!(ret = (char **)malloc((count_tokens(command) + 1) * sizeof(char *))))
-		return (ret);
-	i = 0;
-	j = 0;
-	while (command[i] && command[i] == ' ')
-		++i;
-	while (command[i])
-	{
-		if (command[i] == '"' || command[i] == '\'')
-		{
-			add_string(ret, &(command[i + 1]), ft_strfind(&(command[i + 1]), command[i]), &j);
-			i += ft_strfind(&(command[i + 1]), command[i]) + 2;
-		}
-		else
-		{
-			add_string(ret, &command[i], ft_strfind(&command[i], ' '), &j);
-			i += ft_strfind(&(command[i]), ' ');
-		}
-		while (command[i] && command[i] == ' ')
-			++i;
-	}
-	ret[j] = (void *)0;
+		return ((void *)ret);
+	ix[0] = 0;
+	ix[1] = 0;
+	while (command[ix[0]] && command[ix[0]] == ' ')
+		++(ix[0]);
+	while (command[ix[0]])
+		add_token(ret, command, (int *)ix);
 	return (ret);
 }

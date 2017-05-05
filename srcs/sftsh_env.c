@@ -6,11 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 12:36:20 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 09:42:09 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "sftsh_env.h"
 
 char	*get_env(char **envp, char *val)
 {
@@ -64,13 +65,16 @@ void	set_env(char **envp, char *var, char *value)
 			break ;
 	tmp = envp[i];
 	envp[i] = ret;
+	ft_strdel(&tmp);
 }
 
-char		**copy_env(char **envp)
+char	**copy_env(char **envp)
 {
 	char	**ret;
 	int		len;
 
+	if (!envp || !*envp)
+		return (create_env(&envp));
 	len = 0;
 	while (envp[len])
 		++len;
@@ -82,13 +86,4 @@ char		**copy_env(char **envp)
 		ret[len] = (void *)0;
 	}
 	return (ret);
-}
-
-void		restore_env(char **env, char **copy)
-{
-	int		i;
-
-	i = -1;
-	while (env[++i])
-		env[i] = copy[i];
 }

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/02/08 12:55:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:54:02 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_strdel(char **as)
 {
 	char **ptr;
 
-	if (!as)
+	if (!as || !*as)
 		return ;
 	ptr = as;
 	ft_bzero(*as, ft_strlen(*as));

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 15:55:13 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 18:24:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "sftsh_find_x.h"
 #include "sftsh_types.h"
 
-t_command	*create_command(char **args, char **envp, int num_args)
+t_command	*create_command(char **args, char ***envp, int num_args)
 {
 	t_command	*ret;
 
 	if ((ret = (t_command *)malloc(sizeof(t_command))))
 	{
 		if ((ret->builtin_id = find_builtin(args[0])) < 0)
-			ret->path = find_path(args[0], envp);
+			ret->path = find_path(args[0], *envp);
 		else
 			ret->path = (void *)0;
 		ret->num_args = num_args;

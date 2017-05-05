@@ -6,25 +6,27 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 13:11:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 10:10:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "sftsh_raw_mode.h"
 #include "sftsh_env.h"
 #include "sftsh.h"
-#include "minishell.h"
+#include "sftsh_atexit.h"
 
 int		main(int argc, char **argv, char **envp)
 {
-	char	**env_cpy;
-	char	**tokens;
-	int		i;
+	struct termios	*default_settings;
+	char			**envp_cpy;
 
-	raw_mode();
-	env_cpy = copy_env(envp);
-	if (sftsh(envp) != 0)
-		write(2, "something went wrong!\n", 22);
-	restore_env(envp, env_cpy); /* I'm not sure this is actually even necessary. */
+	default_settings = enter_raw_mode();
+	envp_cpy = copy_env(envp);
+	ft_atexit(1, default_settings, &envp_cpy);
+	if (sftsh(&envp_cpy) != 0)
+		write(2, "unable to read from environment\n", 22);
+	delete_env(&envp_cpy);
+	reset_terminal_settings(default_settings);
 	return (0);
 }

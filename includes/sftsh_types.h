@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/19 21:03:08 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/03 18:24:04 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ typedef struct			s_command
 	int					builtin_id;
 	int					num_args;
 	char				**args;
-	char				**envp;
+	char				***envp;
 	struct s_command	*next;
 }						t_command;
 
-t_command	*create_command(char **args, char **env, int num_args);
+t_command	*create_command(char **args, char ***env, int num_args);
 void		expand_command(t_command *command);
 void		push_command(t_command **stack, t_command *command);
 t_command	*pop_command(t_command **stack);

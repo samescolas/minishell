@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sftsh.h                                            :+:      :+:    :+:   */
+/*   sftsh_atexit.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/12 19:58:05 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 18:18:56 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/05 10:06:00 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/05 10:11:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SFTSH_H
-# define SFTSH_H
+#ifndef SFTSH_ATEXIT_H
+# define SFTSH_ATEXIT_H
 
-int		sftsh(char ***envp);
+struct termios;
+
+void	ft_atexit(int load, struct termios *settings, char ***envp);
 
 #endif

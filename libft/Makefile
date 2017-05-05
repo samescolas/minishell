@@ -6,7 +6,7 @@
 #    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/13 09:59:58 by sescolas          #+#    #+#              #
-#    Updated: 2017/02/28 18:32:25 by sescolas         ###   ########.fr        #
+#    Updated: 2017/05/05 09:51:26 by sescolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,6 @@ $(NAME): $(OBJS) $(HEADER)
 $(OBJS): $(SRCS) $(HEADER)
 
 .PHONY: clean fclean re
-
-print: $(SRCS)
-	lpr -p $?
-	touch print
 
 clean:
 	rm -f *.o

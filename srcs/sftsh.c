@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 11:26:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 09:44:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,18 @@
 #include "sftsh_exec.h"
 #include "sftsh.h"
 
-static char	*prompt(char *p, char *color)
+static char	*input(char *p, char *color)
 {
-	char	*input;
+	char	*input_str;
 
 	ft_padstr((p ? p : ">>"), 1, color);
-	if (read_line(&input) <= 0)
-		return (prompt(p, color));
+	if (read_line(&input_str) <= 0)
+		return (input(p, color));
 	else
-		return (input);
+		return (input_str);
 }
 
-void	display_command(t_command command)
-{
-	if (command.builtin_id >= 0)
-		ft_putstr(command.args[0]);
-	else
-		ft_putstr(command.path);
-	for (int i=1; i < command.num_args; i++)
-	{
-		ft_putstr(" ");
-		ft_putstr(command.args[i]);
-	}
-	ft_putendl("");
-}
-
-char	*get_color(char *color)
+static char	*get_color(char *color)
 {
 	if (ft_strcmp(color, "default") == 0 || ft_strcmp(color, "def") == 0)
 		return (ft_strdup(DEF));
@@ -67,28 +53,39 @@ char	*get_color(char *color)
 		return ((void *)0);
 }
 
-int		sftsh(char **envp)
+static int	delete_prompt(char *prompt[3])
 {
-	char		*prompt_str;
-	char		*prompt_color;
-	char		*command_str;
-	t_command	*command;
-	char		**tokens;
-
-	prompt_str = (void *)0;
-	prompt_color = (void *)0;
-	command_str = (void *)0;
-	command = (void *)0;
-	while ((command_str = prompt(prompt_str, prompt_color)))
-	{
-		if (ft_strncmp(command_str, "ps1=", 4) == 0)
-			prompt_str = ft_strdup(&command_str[4]);
-		else if (ft_strncmp(command_str, "col=", 4) == 0)
-			prompt_color = get_color(&command_str[4]);
-		else if ((command = parse(tokenize(command_str), envp)))
-			sftsh_exec(command);
-	}
-	ft_strdel(&prompt_str);
-	ft_strdel(&prompt_color);
+	ft_strdel(&prompt[0]);
+	ft_strdel(&prompt[1]);
+	ft_strdel(&prompt[2]);
 	return (0);
+}
+
+int			sftsh(char ***envp)
+{
+	char		*prompt[3];
+	t_command	*command;
+
+	prompt[0] = (void *)0;
+	prompt[1] = (void *)0;
+	prompt[2] = (void *)0;
+	while ((prompt[0] = input(prompt[1], prompt[2])))
+	{
+		if (ft_strncmp(prompt[0], "ps1=", 4) == 0)
+		{
+			ft_strdel(&prompt[1]);
+			prompt[1] = ft_strdup(&prompt[0][4]);
+		}
+		else if (ft_strncmp(prompt[0], "col=", 4) == 0)
+		{
+			ft_strdel(&prompt[2]);
+			prompt[2] = get_color(ft_strmap(&prompt[0][4], &ft_tolower));
+		}
+		else if ((command = parse(prompt[0], envp)))
+		{
+			if (sftsh_exec(command) == -42)
+				break ;
+		}
+	}
+	return (delete_prompt(prompt));
 }

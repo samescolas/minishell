@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 21:59:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 10:13:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "sftsh_builtins.h"
 #include "sftsh_types.h"
 #include "sftsh_parse.h"
+#include "sftsh_tokenize.h"
 
 static int	count_args(char **tokens, int ix)
 {
@@ -28,12 +29,13 @@ static int	count_args(char **tokens, int ix)
 	return (ix - num_items);
 }
 
-static void	add_a_command(t_command **list, char **tokens, char **envp, int *ix)
+static void	add_a_command(\
+		t_command **list, char **tokens, char ***envp, int *ix)
 {
-	int		num_args;
-	int		j;
-	char	**args;
-	char	action;
+	int			num_args;
+	int			j;
+	char		**args;
+	char		action;
 	t_command	*cmd;
 
 	num_args = count_args(tokens, *ix);
@@ -49,14 +51,16 @@ static void	add_a_command(t_command **list, char **tokens, char **envp, int *ix)
 	add_command(list, create_command(args, envp, num_args));
 }
 
-t_command	*parse(char **tokens, char **envp)
+t_command	*parse(char *command, char ***envp)
 {
 	t_command	*commands;
 	t_command	*tmp;
+	char		**tokens;
 	int			i;
 
+	tokens = tokenize(command);
 	commands = (void *)0;
-	expand_tokens(tokens, envp);
+	expand_tokens(tokens, *envp);
 	i = 0;
 	while (tokens[i])
 		add_a_command(&commands, tokens, envp, &i);

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 12:02:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 12:35:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/04 14:34:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,9 @@ static void	unset_env_vars(char ***envp, char **var_list, int num_args)
 	while ((*envp)[++i])
 	{
 		if (!ft_in((*envp)[i], var_list, num_args))
-		{
-			ft_putstr("copying ");
-			ft_putendl(ft_strjoin((*envp)[i], " to new env"));
 			ret[size++] = (*envp)[i];
-		}
 		else
-		{
-			ft_putstr("not copying ");
-			ft_putendl(ft_strjoin((*envp)[i], " to new env"));
-		}
+			ft_strdel(&(*envp)[i]);
 	}
 	ret[size] = (void *)0;
 	*envp = ret;
@@ -61,6 +54,6 @@ int		sftsh_unsetenv(t_command *command)
 {
 	int		i;
 
-	unset_env_vars(&command->envp, &command->args[1], command->num_args - 1);
+	unset_env_vars(command->envp, &command->args[1], command->num_args - 1);
 	return (0);
 }
