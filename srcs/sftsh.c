@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 09:44:10 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:37:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@
 #include "sftsh_exec.h"
 #include "sftsh.h"
 
-static char	*input(char *p, char *color)
+static char	*input(char *prompt[3])
 {
 	char	*input_str;
+	int		line_read;
 
-	ft_padstr((p ? p : ">>"), 1, color);
-	if (read_line(&input_str) <= 0)
-		return (input(p, color));
-	else
-		return (input_str);
+	ft_padstr((prompt[1] ? prompt[1] : DEFAULT_PROMPT)\
+			, 1, (prompt[2] ? prompt[2] : DEFAULT_COLOR));
+	line_read = read_line(&input_str);
+	while (line_read <= 0)
+	{
+		ft_padstr((prompt[1] ? prompt[1] : DEFAULT_PROMPT)\
+			, 1, (prompt[2] ? prompt[2] : DEFAULT_COLOR));
+		line_read = read_line(&input_str);
+	}
+	return (input_str);
 }
 
 static char	*get_color(char *color)
@@ -69,7 +75,7 @@ int			sftsh(char ***envp)
 	prompt[0] = (void *)0;
 	prompt[1] = (void *)0;
 	prompt[2] = (void *)0;
-	while ((prompt[0] = input(prompt[1], prompt[2])))
+	while ((prompt[0] = input(prompt)))
 	{
 		if (ft_strncmp(prompt[0], "ps1=", 4) == 0)
 		{

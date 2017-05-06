@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/04 13:50:39 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 17:53:01 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print_error_execve(char *str)
 	ft_putendl(str);
 }
 
-int		exec_command(t_command *command)
+int			exec_command(t_command *command)
 {
 	pid_t	child_pid;
 	int		status;
@@ -39,7 +39,35 @@ int		exec_command(t_command *command)
 		return (1);
 }
 
-int		sftsh_exec(t_command *commands)
+void		inquire(char *command)
 {
-	return (exec_command(commands));
+	ft_putstr("what the shell");
+	if (command)
+	{
+		ft_putstr(" is ");
+		ft_putstr(command);
+	}
+	ft_putendl("?");
+}
+
+int			sftsh_exec(t_command *commands)
+{
+	int		status;
+
+	if (commands->path && access(commands->path, X_OK) != 0)
+	{
+		ft_putstr("you can't use that: ");
+		ft_putendl(commands->path);
+	}
+	if (commands->builtin_id >= 0 || commands->path)
+		status = exec_command(commands);
+	else
+		inquire(commands->args[0]);
+	commands = commands->next;
+	while (commands && status == 0)
+	{
+		status = exec_command(commands);
+		commands = commands->next;
+	}
+	return (status);
 }

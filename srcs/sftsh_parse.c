@@ -6,14 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 10:13:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 18:44:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "sftsh_expand.h"
 #include "sftsh_exec.h"
-#include "sftsh_find_x.h"
 #include "sftsh_builtins.h"
 #include "sftsh_types.h"
 #include "sftsh_parse.h"
@@ -24,7 +23,7 @@ static int	count_args(char **tokens, int ix)
 	int		num_items;
 
 	num_items = ix;
-	while (tokens[ix])
+	while (tokens[ix] && ft_strcmp(tokens[ix], ";"))
 		++ix;
 	return (ix - num_items);
 }
@@ -45,8 +44,10 @@ static void	add_a_command(\
 		exit(0);
 	}
 	j = 0;
-	while (tokens[*ix])
+	while (tokens[*ix] && ft_strcmp(";", tokens[*ix]))
 		args[j++] = ft_strdup(tokens[(*ix)++]);
+	if (tokens[(*ix)])
+		++(*ix);
 	args[j] = (void *)0;
 	add_command(list, create_command(args, envp, num_args));
 }
@@ -58,7 +59,12 @@ t_command	*parse(char *command, char ***envp)
 	char		**tokens;
 	int			i;
 
-	tokens = tokenize(command);
+	i = 0;
+	while (command[i] && (command[i] == ';' || command[i] == ' '))
+		++i;
+	if (!(command[i]))
+		return ((void *)0);
+	tokens = tokenize(&command[i]);
 	commands = (void *)0;
 	expand_tokens(tokens, *envp);
 	i = 0;

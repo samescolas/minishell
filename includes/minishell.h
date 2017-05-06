@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/02 20:15:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:48:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 #include <unistd.h>
 
 # define MAX_PATHLEN 512
-# define MAX_DEPTH
-# define NUM_BUILTINS 9
 # define BUFF_SIZE 32
+
+# define DEFAULT_PROMPT "sftsh $>"
+# define DEFAULT_COLOR "\x1B[94m"
 
 # define DEF "\x1B[0m"
 # define RED "\x1B[31m"

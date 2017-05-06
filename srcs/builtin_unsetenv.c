@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 12:02:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/04 14:34:16 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:32:40 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	unset_env_vars(char ***envp, char **var_list, int num_args)
 	*envp = ret;
 }
 
-int		sftsh_unsetenv(t_command *command)
+int			sftsh_unsetenv(t_command *command)
 {
 	int		i;
 

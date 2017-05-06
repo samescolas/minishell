@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 17:42:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:18:31 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,29 +75,6 @@ void	append_list(t_tkn **list, t_tkn *node)
 		node->prev = tmp;
 	}
 	tmp = (void *)0;
-}
-
-void	push_list(t_tkn **list, t_tkn *node)
-{
-	if (!list || !*list)
-		*list = node;
-	else
-	{
-		node->next = *list;
-		*list = node;
-	}
-}
-
-t_tkn	*pop_list(t_tkn **list)
-{
-	t_tkn	*ret;
-
-	ret = (void *)0;
-	if (!list || !*list)
-		return (ret);
-	ret = *list;
-	*list = (*list)->next;
-	return (ret);
 }
 
 char	**list_to_arr(t_tkn *list)

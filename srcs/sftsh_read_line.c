@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 14:06:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 18:41:04 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,13 @@ static void		key_bkspc(char *line, unsigned int *chars_copied)
 	write(1, bkspc, 3);
 }
 
-static void		 key_printable(char c, char *line, unsigned int *chars_copied)
+static void		key_printable(char c, char *line, unsigned int *chars_copied)
 {
+//	if (*chars_copied == 0 && c == ';')
+//		return ;
 	write(1, &c, 1);
 	line[(*chars_copied)++] = c;
 }
-
-/*
-static void		key_tab(char *line, unsigned int *chars_copied)
-{
-	if (*chars_copied == 0)
-		ft_putendl("Would you really like all 127 things displayed?");
-	else if (ft_strchr(line, ' '))
-		autocomplete(line, chars_copied);
-	else
-		ft_putendl("List commands");
-}
-*/
 
 int				read_line(char **line)
 {
@@ -62,28 +52,23 @@ int				read_line(char **line)
 
 	*line = ft_strnew(BUFF_SIZE);
 	chars_copied = 0;
-	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0)
+	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0 && buf != '\n' && buf != 10)
 	{
 		if (chars_copied > BUFF_SIZE && chars_copied % BUFF_SIZE == 0)
 			resize_buffer(line, chars_copied);
-		if (ft_isprint(buf))
+		if (ft_isprint(buf) && buf != '\n')
 			key_printable(buf, *line, &chars_copied);
 		if (buf == 127)
 			key_bkspc(*line, &chars_copied);
-		else if (buf == '\t')
-			continue ;
-	//		key_tab(*line, &chars_copied);
 		else if (buf == 3)
 		{
 			write(1, "\n", 1);
 			return (-1);
 		}
-		else if (buf == '\n' || buf == 10)
-			break ;
 	}
 	write(1, "\n", 1);
-	if (ret > 0 || **line != '\0')
+	if (chars_copied > 0 || **line != '\0')
 		return (1);
-	else 
+	else
 		return (-1);
 }

@@ -6,14 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:02:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 12:17:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:48:37 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SFTSH_BUILTINS_H
 # define SFTSH_BUILTINS_H
 
-# define NUM_BUILTINS 9
+# define NUM_BUILTINS 6
 
 typedef struct s_command t_command;
 

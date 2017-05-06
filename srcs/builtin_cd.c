@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:20:33 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 19:01:54 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:26:24 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	sftsh_cd_err(int num_args, ...)
 	return (1);
 }
 
-int		sftsh_cd(t_command *command)
+int			sftsh_cd(t_command *command)
 {
 	char	*full_path;
 
@@ -53,7 +53,7 @@ int		sftsh_cd(t_command *command)
 	{
 		set_env(*command->envp, "OLDPWD", getcwd((void *)0, MAX_PATHLEN));
 		chdir(full_path);
-		ft_strdel(&full_path); /* this may cause segfaults */
+		ft_strdel(&full_path);
 		return (0);
 	}
 	return (sftsh_cd_err(2, "cd: no such file or directory: ", full_path));

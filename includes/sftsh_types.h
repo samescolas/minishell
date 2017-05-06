@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 18:24:04 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:19:01 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void		free_commands(t_command **stack);
 t_tkn		*create_list_item(void *data, size_t size);
 void		insert_list(t_tkn **list, t_tkn *node, int (*cmp)(t_tkn *, t_tkn *));
 void		append_list(t_tkn **list, t_tkn *node);
-void		push_list(t_tkn **list, t_tkn *node);
-t_tkn		*pop_list(t_tkn **list);
 char		**list_to_arr(t_tkn *list);
+char		*find_executable_path(char *command, char **envp);
 
 #endif

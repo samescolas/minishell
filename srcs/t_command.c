@@ -6,13 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/03 18:24:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:44:44 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "sftsh_builtins.h"
-#include "sftsh_find_x.h"
 #include "sftsh_types.h"
 
 t_command	*create_command(char **args, char ***envp, int num_args)
@@ -22,7 +21,7 @@ t_command	*create_command(char **args, char ***envp, int num_args)
 	if ((ret = (t_command *)malloc(sizeof(t_command))))
 	{
 		if ((ret->builtin_id = find_builtin(args[0])) < 0)
-			ret->path = find_path(args[0], *envp);
+			ret->path = find_executable_path(args[0], *envp);
 		else
 			ret->path = (void *)0;
 		ret->num_args = num_args;
@@ -33,18 +32,7 @@ t_command	*create_command(char **args, char ***envp, int num_args)
 	return (ret);
 }
 
-void	push_command(t_command **stack, t_command *command)
-{
-	if (!stack || !*stack)
-		*stack = command;
-	else
-	{
-		command->next = *stack;
-		*stack = command;
-	}
-}
-
-void	add_command(t_command **queue, t_command *command)
+void		add_command(t_command **queue, t_command *command)
 {
 	t_command	*tmp;
 
@@ -79,7 +67,7 @@ t_command	*pop_command(t_command **stack)
 	return (ret);
 }
 
-void	free_command(t_command *command)
+void		free_command(t_command *command)
 {
 	ft_strdel(&(command->path));
 	command->path = (void *)0;
@@ -87,7 +75,7 @@ void	free_command(t_command *command)
 	command->next = (void *)0;
 }
 
-void	free_commands(t_command **stack)
+void		free_commands(t_command **stack)
 {
 	t_command	*tmp;
 

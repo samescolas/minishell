@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:26:31 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 17:30:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:22:07 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	brack_push(char stack[MAX_DEPTH], int *ix, char bracket)
 	*ix = *ix - 1;
 }
 
-int	valid_bracket(char *str)
+int			valid_bracket(char *str)
 {
 	char	brack_stack[128];
 	int		stack_ix;
