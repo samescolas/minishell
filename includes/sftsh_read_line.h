@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 13:06:26 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/06 14:26:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SFTSH_READ_LINE_H
 
 # include "../libft/libft.h"
+# include <signal.h>
 
 # define BUFF_SIZE	32
 

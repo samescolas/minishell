@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 11:03:51 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 20:50:09 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void		print_error_message(void)
 	write(2, "invalid brackets found\n", 23);
 	exit(0);
 }
+
+/* most of this needs to be rewritten to make things like "ls;cd;" split correctly */
 
 static int		count_tokens(char *command)
 {
@@ -52,16 +54,12 @@ static void		add_string(char **list, char *str, size_t size, int *ix)
 
 	ret = (void *)0;
 	semicolon = (str[size - 1] == ';' && size > 1);
-	if ((ret = ft_strnew(size)))
-		ft_strncpy(ret, str, size);
+	if ((ret = ft_strnew(size - semicolon)))
+		ft_strncpy(ret, str, size - semicolon);
 	list[(*ix)++] = ret;
 	if (semicolon)
-	{
-		ret[size - 1] = '\0';
 		list[(*ix)++] = ft_strdup(";");
-	}
-	if (!str[size])
-		list[(*ix)] = (void *)0;
+	list[(*ix)] = (void *)0;
 }
 
 static void		add_token(char **list, char *command, int *ix)
@@ -87,8 +85,13 @@ char			**tokenize(char *command)
 	char	**ret;
 	int		ix[2];
 
-	if (!(ret = (char **)malloc((count_tokens(command) + 1) * sizeof(char *))))
-		return ((void *)ret);
+	ft_putstr("old: ");
+	ft_putnbr(count_tokens(command));
+	ft_putstr("\nnew: ");
+	ft_putnbr(count_tokens2(command));
+	ft_putendl("");
+	if (!(ret = (char **)malloc((count_tokens(command) + 1) * sizeof(char **))))
+		return ((void *)0);
 	ix[0] = 0;
 	ix[1] = 0;
 	while (command[ix[0]] && command[ix[0]] == ' ')

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/04 13:16:38 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 20:18:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_intmin(int a, int b);
+int					ft_intmax(int a, int b);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 int					ft_countwords(const char *s, char c);

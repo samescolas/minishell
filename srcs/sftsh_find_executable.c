@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:50:56 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 18:32:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 18:06:27 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char		*find_executable_path(char *command, char **envp)
 	char	**paths;
 	char	*test_path;
 	char	*cmd;
+	int		i;
 
 	if (check_command(command))
 		return (command);
@@ -67,9 +68,18 @@ char		*find_executable_path(char *command, char **envp)
 	if (!get_env(envp, "PATH"))
 		return ((void *)0);
 	paths = ft_strsplit(get_env(envp, "PATH"), ':');
-	while (*paths)
-		if ((test_path = check_path(*(paths++), cmd)))
+	i = 0;
+	while (paths[i])
+	{
+		if ((test_path = check_path(paths[i++], cmd)))
+		{
+			ft_strarrdel(&paths);
+			free(paths);
 			return (test_path);
+		}
+	}
+	ft_strarrdel(&paths);
+	free(paths);
 	if ((test_path = check_current_directory(cmd)))
 		return (test_path);
 	ft_strdel(&test_path);

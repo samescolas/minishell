@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 16:48:41 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 12:01:05 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define BUFF_SIZE 32
 
 # define DEFAULT_PROMPT "sftsh $>"
-# define DEFAULT_COLOR "\x1B[94m"
+# define DEFAULT_COLOR "\x1B[90m"
 
 # define DEF "\x1B[0m"
 # define RED "\x1B[31m"
@@ -34,5 +34,7 @@
 # define BK2 "\x1B[90m"
 # define BL2 "\x1B[94m"
 # define MG2 "\x1B[95m"
+
+volatile sig_atomic_t	g_ctrl_c_pressed;
 
 #endif

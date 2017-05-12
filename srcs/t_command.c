@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 16:44:44 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 18:08:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,14 @@ t_command	*pop_command(t_command **stack)
 
 void		free_command(t_command *command)
 {
+	ft_strarrdel(&(command->args));
 	ft_strdel(&(command->path));
+	free(command->args);
 	command->path = (void *)0;
 	command->args = (void *)0;
 	command->next = (void *)0;
+	command->num_args = 0;
+	free(command);
 }
 
 void		free_commands(t_command **stack)

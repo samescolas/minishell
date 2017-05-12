@@ -6,11 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 18:41:04 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 17:21:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sftsh_read_line.h"
+#include "minishell.h"
+#include <stdio.h>
 
 static void		resize_buffer(char **line, unsigned int current_size)
 {
@@ -18,8 +20,7 @@ static void		resize_buffer(char **line, unsigned int current_size)
 
 	tmp = ft_strnew(current_size + BUFF_SIZE);
 	ft_strncpy(tmp, *line, current_size);
-	ft_bzero(*line, current_size);
-	free(*line);
+	ft_strdel(line);
 	*line = tmp;
 }
 
@@ -38,10 +39,17 @@ static void		key_bkspc(char *line, unsigned int *chars_copied)
 
 static void		key_printable(char c, char *line, unsigned int *chars_copied)
 {
-//	if (*chars_copied == 0 && c == ';')
-//		return ;
+	if (*chars_copied == 0 && c == ';')
+		return ;
 	write(1, &c, 1);
 	line[(*chars_copied)++] = c;
+}
+
+static void		handle_ctrl_c(int sig)
+{
+	g_ctrl_c_pressed = 1;
+	write(1, "\n", 1);
+	signal(SIGINT, handle_ctrl_c);
 }
 
 int				read_line(char **line)
@@ -49,24 +57,35 @@ int				read_line(char **line)
 	char			buf;
 	int				ret;
 	unsigned int	chars_copied;
+	void			*prev_sig_action;
 
 	*line = ft_strnew(BUFF_SIZE);
 	chars_copied = 0;
-	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0 && buf != '\n' && buf != 10)
+	prev_sig_action = signal(SIGINT, handle_ctrl_c);
+	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0 && buf != '\n')
 	{
-		if (chars_copied > BUFF_SIZE && chars_copied % BUFF_SIZE == 0)
+		if (g_ctrl_c_pressed)
+		{
+			ft_strdel(line);
+			*line = ft_strnew(BUFF_SIZE);
+			g_ctrl_c_pressed = 0;
+		}
+		if (chars_copied > BUFF_SIZE - 1 && chars_copied % BUFF_SIZE == 0)
 			resize_buffer(line, chars_copied);
 		if (ft_isprint(buf) && buf != '\n')
 			key_printable(buf, *line, &chars_copied);
 		if (buf == 127)
 			key_bkspc(*line, &chars_copied);
-		else if (buf == 3)
-		{
-			write(1, "\n", 1);
-			return (-1);
-		}
+	}
+	if (g_ctrl_c_pressed)
+	{
+		g_ctrl_c_pressed = 0;
+		free(*line);
+		*line = (void *)0;
+		return (-1);
 	}
 	write(1, "\n", 1);
+	signal(SIGINT, prev_sig_action);
 	if (chars_copied > 0 || **line != '\0')
 		return (1);
 	else

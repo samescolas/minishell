@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 18:44:16 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 19:14:53 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "sftsh_types.h"
 #include "sftsh_parse.h"
 #include "sftsh_tokenize.h"
+#include "sftsh_atexit.h"
 
 static int	count_args(char **tokens, int ix)
 {
@@ -39,10 +40,7 @@ static void	add_a_command(\
 
 	num_args = count_args(tokens, *ix);
 	if (!(args = (char **)malloc((num_args + 1) * sizeof(char *))))
-	{
-		write(2, "memory error\n", 13);
-		exit(0);
-	}
+		return ;
 	j = 0;
 	while (tokens[*ix] && ft_strcmp(";", tokens[*ix]))
 		args[j++] = ft_strdup(tokens[(*ix)++]);
@@ -62,13 +60,17 @@ t_command	*parse(char *command, char ***envp)
 	i = 0;
 	while (command[i] && (command[i] == ';' || command[i] == ' '))
 		++i;
-	if (!(command[i]))
+	if (!(command[i]) || !(tokens = tokenize(&command[i])))
 		return ((void *)0);
-	tokens = tokenize(&command[i]);
+	i = 0;
+	while (tokens[i])
+		ft_putendl(tokens[i++]);
 	commands = (void *)0;
 	expand_tokens(tokens, *envp);
 	i = 0;
 	while (tokens[i])
 		add_a_command(&commands, tokens, envp, &i);
+	ft_strarrdel(&tokens);
+	free(tokens);
 	return (commands);
 }

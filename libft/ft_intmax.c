@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sftsh_exec.h                                       :+:      :+:    :+:   */
+/*   ft_intmax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/18 19:33:36 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/06 11:35:45 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/11 20:18:16 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/11 20:18:31 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SFTSH_EXEC_H
-# define SFTSH_EXEC_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <signal.h>
-# include "../libft/libft.h"
-
-typedef struct  s_command t_command;
-
-int		sftsh_exec(t_command *command);
-
-#endif
+int		ft_intmax(int a, int b)
+{
+	return (a < b ? b : a);
+}

@@ -6,13 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 18:22:02 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 18:59:11 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "sftsh_env.h"
 #include "sftsh_expand.h"
+#include "minishell.h"
 
 char		*expand_tilde(char *path, char **envp)
 {
@@ -51,42 +52,68 @@ char		*replace_var(char *orig_str, char *var, int var_len, char **envp)
 	int		j;
 
 	val = get_env(envp, var);
-	if (!val)
+	if (!(ret = ft_strnew(ft_strlen(val) + ft_strlen(orig_str) - var_len)))
 		return (orig_str);
-	ret = ft_strnew(ft_strlen(val) + ft_strlen(orig_str) - var_len);
 	i = 0;
 	j = 0;
 	while (orig_str[i] && orig_str[i] != '$')
 		ret[j++] = orig_str[i++];
-	ft_strcat(ret, val);
+	if (val)
+		ft_strcat(ret, val);
 	j += ft_strlen(val);
 	++i;
 	while (orig_str[i] && orig_str[i] != ' ')
 		++i;
 	while (orig_str[i])
 		ret[j++] = orig_str[i++];
+	ft_strdel(&orig_str);
 	return (ret);
 }
 
 char		*expand_vars(char *str, char **envp)
 {
 	int		var_len;
-	char	*var_ind;
+	char	*var_start;
 	char	*var;
 
-	var_ind = str - 1;
-	while ((var_ind = ft_strchr(var_ind + 1, '$')))
+	var_start = str - 1;
+	while ((var_start = ft_strchr(var_start + 1, '$')))
 	{
 		var_len = -1;
-		while (var_ind[++var_len])
-			if (var_ind[var_len] == ' ')
+		while (var_start[++var_len])
+			if (var_start[var_len] == ' ')
 				break ;
-		if (!var_ind[1])
+		if (!var_start[1])
 			break ;
-		var = ft_strsub(var_ind, 1, var_len - 1);
+		var = ft_strsub(var_start, 1, var_len - 1);
 		str = replace_var(str, var, var_len - 1, envp);
 	}
 	return (str);
+}
+
+char		*expand_dots(char *str, char **envp)
+{
+	char	*ret;
+	char	*tmp;
+
+	if (*str && *str != '.')
+		return (str);
+	if (ft_strcmp(str, ".") == 0)
+	{
+		ret = getcwd((void *)0, MAX_PATHLEN);
+		ft_strdel(&str);
+		return (ret);
+	}
+	else if (ft_strcmp(str, "..") == 0)
+	{
+		ret = getcwd((void *)0, MAX_PATHLEN);
+		ft_strdel(&str);
+		tmp = ft_strrchr(ret, '/');
+		*tmp = '\0';
+		return (ret);
+	}
+	else
+		return (str);
 }
 
 void		expand_tokens(char **tokens, char **envp)
@@ -98,6 +125,7 @@ void		expand_tokens(char **tokens, char **envp)
 	{
 		*tmp = expand_tilde(*tmp, envp);
 		*tmp = expand_vars(*tmp, envp);
+		*tmp = expand_dots(*tmp, envp);
 		++tmp;
 	}
 }

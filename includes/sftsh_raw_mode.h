@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:53:54 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/04 14:00:10 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/08 14:26:15 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-struct termios	*enter_raw_mode(void);
+struct termios	*sftsh_makeraw(void);
 void			reset_terminal_settings(struct termios *default_settings);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:20:33 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 16:26:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 19:04:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	sftsh_cd_err(int num_args, ...)
 int			sftsh_cd(t_command *command)
 {
 	char	*full_path;
+	char	*cwd;
 
 	if (command->num_args > 2)
 		return (sftsh_cd_err(1, "cd: too many arguments"));
@@ -48,12 +49,15 @@ int			sftsh_cd(t_command *command)
 			return (1);
 	}
 	else
-		full_path = expand_tilde((command->args)[1], *command->envp);
+		full_path = command->args[1];
 	if (access(full_path, R_OK) == 0)
 	{
-		set_env(*command->envp, "OLDPWD", getcwd((void *)0, MAX_PATHLEN));
+		cwd = getcwd((void *)0, MAX_PATHLEN);
+		set_env(*command->envp, "OLDPWD", cwd);
 		chdir(full_path);
-		ft_strdel(&full_path);
+		if (full_path != command->args[1])
+			ft_strdel(&full_path);
+		ft_strdel(&cwd);
 		return (0);
 	}
 	return (sftsh_cd_err(2, "cd: no such file or directory: ", full_path));

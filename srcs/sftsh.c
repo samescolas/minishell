@@ -6,13 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 16:37:36 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/11 19:28:37 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "sftsh_read_line.h"
-#include "sftsh_tokenize.h"
 #include "sftsh_parse.h"
 #include "sftsh_types.h"
 #include "sftsh_exec.h"
@@ -20,19 +19,21 @@
 
 static char	*input(char *prompt[3])
 {
-	char	*input_str;
-	int		line_read;
+	char		*input_text;
+	int			line_read;
 
+	ft_strdel(&prompt[0]);
 	ft_padstr((prompt[1] ? prompt[1] : DEFAULT_PROMPT)\
 			, 1, (prompt[2] ? prompt[2] : DEFAULT_COLOR));
-	line_read = read_line(&input_str);
-	while (line_read <= 0)
+	line_read = read_line(&input_text);
+	while (line_read <= 0 && !g_ctrl_c_pressed)
 	{
+		ft_strdel(&input_text);
 		ft_padstr((prompt[1] ? prompt[1] : DEFAULT_PROMPT)\
 			, 1, (prompt[2] ? prompt[2] : DEFAULT_COLOR));
-		line_read = read_line(&input_str);
+		line_read = read_line(&input_text);
 	}
-	return (input_str);
+	return (input_text);
 }
 
 static char	*get_color(char *color)
@@ -69,8 +70,8 @@ static int	delete_prompt(char *prompt[3])
 
 int			sftsh(char ***envp)
 {
-	char		*prompt[3];
 	t_command	*command;
+	char		*prompt[3];
 
 	prompt[0] = (void *)0;
 	prompt[1] = (void *)0;
