@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/13 21:05:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 11:13:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			sftsh_exec(t_command *commands)
 			status = exec_command(cmd);
 		else
 			inquire(cmd->args[0]);
-		//free_command(cmd);
+		free_command(cmd);
 	}
 	commands = (void *)0;
 	return (status);

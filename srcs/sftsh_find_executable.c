@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 19:21:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/13 21:15:58 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 11:14:43 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_next_path(char **paths, char *cmd, int *ix)
 	char	*cmd_str;
 	char	*tmp;
 
-	if (!paths[(*ix)++])
+	if (!paths[++(*ix)])
 	{
 		ft_strarrdel(&paths);
 		free(paths);
@@ -63,7 +63,7 @@ static char	*find_matching_path(char *command, char **paths)
 	ret = (void *)0;
 	if (!paths || !*paths)
 		return ((void *)0);
-	i = 0;
+	i = -1;
 	while ((tmp = get_next_path(paths, command, &i)))
 	{
 		if (access(tmp, F_OK) == 0)
@@ -97,7 +97,7 @@ char		*find_executable_path(char *command, char **envp)
 	char	*path;
 
 	if (access(command, X_OK) == 0 && !is_dir(command))
-		return (command);
+		return (ft_strdup(command));
 	path = find_matching_path(command, ft_strsplit(get_env(envp, "PATH"), ':'));
 	if (!path && access(command, F_OK) != 0)
 	{

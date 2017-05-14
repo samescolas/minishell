@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:59:53 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 10:09:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 12:21:45 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ void	ft_atexit(int load, struct termios *default_settings, char ***envp)
 		return ;
 	}
 	if (loaded_envp)
+	{
 		delete_env(loaded_envp);
+		free(*loaded_envp);
+		loaded_envp = (void *)0;
+	}
 	if (loaded_settings)
 		reset_terminal_settings(loaded_settings);
 	exit(0);

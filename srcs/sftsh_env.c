@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 09:42:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 12:29:32 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	append_env(char ***envp, char *var, char *val)
 	i = -1;
 	while ((*envp)[++i])
 		ret[i] = (*envp)[i];
+	free(*envp);
 	ret[i] = ft_strnew(ft_strlen(var) + ft_strlen(val) + 1);
 	ft_strcpy(ret[i], var);
 	ft_strncat(ret[i], "=", 1);

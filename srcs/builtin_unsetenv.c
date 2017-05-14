@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 12:02:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/05 16:32:40 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 12:32:26 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	unset_env_vars(char ***envp, char **var_list, int num_args)
 			ft_strdel(&(*envp)[i]);
 	}
 	ret[size] = (void *)0;
+	free(*envp);
 	*envp = ret;
 }
 
