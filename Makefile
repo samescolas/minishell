@@ -19,7 +19,7 @@ all : $(NAME)
 $(NAME) : $(OBJS) $(HEADER)
 	$(CC) .objs/*.o $(LINK) -g -o $@
 
-.objs/%.o : srcs/%.c $(LIBFT)
+.objs/%.o : srcs/%.c $(LIBFT) $(HEADER)
 	$(CC) -I includes -c -o $@ $<
 
 $(LIBFT) : $(LIB_DEPS)

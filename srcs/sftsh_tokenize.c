@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 20:50:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/12 16:11:31 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,86 +17,111 @@
 static void		print_error_message(void)
 {
 	write(2, "invalid brackets found\n", 23);
-	exit(0);
+	//exit(0);
 }
 
-/* most of this needs to be rewritten to make things like "ls;cd;" split correctly */
-
-static int		count_tokens(char *command)
+int			count_tokens(char *command)
 {
 	int		num_tokens;
-	int		i;
-	int		offset;
+	char	*ptr;
 
+	ptr = command;
+	while (*ptr && (*ptr == ' ' || *ptr == ';'))
+		++ptr;
 	num_tokens = 0;
-	i = 0;
-	while (command[i] && command[i] == ' ')
-		++i;
-	while (command[i])
+	while (*ptr)
 	{
-		if (command[i] == '"' || command[i] == '\'')
-			i += ft_strfind(&(command[i + 1]), command[i]) + 2;
-		else
-			i += ft_strfind(&(command[i]), ' ');
-		if (command[i - 2] && command[i - 1] == ';' && command[i - 2] != ' ')
+		if (*ptr == '"' || *ptr == '\'')
+		{
 			++num_tokens;
-		while (command[i] && command[i] == ' ')
-			++i;
-		++num_tokens;
+			if (!ft_strchr(ptr + 1, *ptr))
+			{
+				print_error_message();
+				return (0);
+			}
+			else
+				ptr = ft_strchr(ptr + 1, *ptr) + 1;
+		}
+		else if (*ptr == ';')
+		{
+			++num_tokens;
+			++ptr;
+		}
+		else
+		{
+			while (*ptr && *ptr != ' ' && *ptr != ';' && *ptr != '"' && *ptr != '\'')
+				++ptr;
+			++num_tokens;
+		}
+		while (*ptr && *ptr == ' ')
+			++ptr;
 	}
 	return (num_tokens);
 }
 
-static void		add_string(char **list, char *str, size_t size, int *ix)
+char	*add_string(char *start, char delim)
 {
-	int		semicolon;
+	int		i;
 	char	*ret;
 
-	ret = (void *)0;
-	semicolon = (str[size - 1] == ';' && size > 1);
-	if ((ret = ft_strnew(size - semicolon)))
-		ft_strncpy(ret, str, size - semicolon);
-	list[(*ix)++] = ret;
-	if (semicolon)
-		list[(*ix)++] = ft_strdup(";");
-	list[(*ix)] = (void *)0;
-}
-
-static void		add_token(char **list, char *command, int *ix)
-{
-	if (command[ix[0]] == '"' || command[ix[0]] == '\'')
+	i = 0;
+	if (delim == '\0')
 	{
-		add_string(list, &(command[ix[0] + 1]),\
-			ft_strfind(&(command[ix[0] + 1]), command[ix[0]]), &ix[1]);
-		ix[0] += ft_strfind(&(command[ix[0] + 1]), command[ix[0]]) + 2;
+		if (!ft_strchr(start, ';') && !ft_strchr(start, ' '))
+			return (ft_strdup(start));
+		while (start[i] && start[i] != ' ' && start[i] != ';')
+			++i;
+		ret = ft_strsub(start, 0, i);
 	}
 	else
 	{
-		add_string(list, &command[ix[0]],\
-				ft_strfind(&command[ix[0]], ' '), &ix[1]);
-		ix[0] += ft_strfind(&(command[ix[0]]), ' ');
+		if (!(ret = ft_strnew(ft_strfind(start, delim))))
+			return ((void *)0);
+		while (start[i] && start[i] != delim)
+		{
+			ret[i] = start[i];
+			++i;
+		}
+		ret[i] = '\0';
 	}
-	while (command[ix[0]] && command[ix[0]] == ' ')
-		++ix[0];
+	return (ret);
 }
 
-char			**tokenize(char *command)
+char	**tokenize(char *command)
 {
 	char	**ret;
-	int		ix[2];
+	char	*ptr;
+	int		i;
 
-	ft_putstr("old: ");
-	ft_putnbr(count_tokens(command));
-	ft_putstr("\nnew: ");
-	ft_putnbr(count_tokens2(command));
-	ft_putendl("");
-	if (!(ret = (char **)malloc((count_tokens(command) + 1) * sizeof(char **))))
+	if (!(i = count_tokens(command)))
 		return ((void *)0);
-	ix[0] = 0;
-	ix[1] = 0;
-	while (command[ix[0]] && command[ix[0]] == ' ')
-		++(ix[0]);
-	while (command[ix[0]])
-		add_token(ret, command, (int *)ix);
+	if (!(ret = (char **)malloc((i + 1) * sizeof(char *))))
+		return ((void *)0);
+	ptr = command;
+	while (*ptr && (*ptr == ' ' || *ptr == ';'))
+		++ptr;
+	i = 0;
+	while (*ptr)
+	{
+		if (*ptr == '"' || *ptr == '\'')
+		{
+			ret[i++] = add_string(ptr + 1, *ptr);
+			ptr = ft_strchr(ptr + 1, *ptr) + 1;
+		}
+		else if (*ptr == ';')
+		{
+			ret[i++] = ft_strdup(";");
+			++ptr;
+		}
+		else
+		{
+			ret[i++] = add_string(ptr, '\0');
+			while (*ptr && *ptr != ' ' && *ptr != ';')
+				++ptr;
+		}
+		while (*ptr && *ptr == ' ')
+			++ptr;
+	}
+	ret[i] = (void *)0;
 	return (ret);
 }

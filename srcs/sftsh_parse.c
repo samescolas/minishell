@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 19:14:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/12 16:24:48 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	add_a_command(\
 	j = 0;
 	while (tokens[*ix] && ft_strcmp(";", tokens[*ix]))
 		args[j++] = ft_strdup(tokens[(*ix)++]);
-	if (tokens[(*ix)])
+	while (tokens[*ix] && ft_strcmp(";", tokens[*ix]) == 0)
 		++(*ix);
 	args[j] = (void *)0;
 	add_command(list, create_command(args, envp, num_args));
@@ -62,9 +62,6 @@ t_command	*parse(char *command, char ***envp)
 		++i;
 	if (!(command[i]) || !(tokens = tokenize(&command[i])))
 		return ((void *)0);
-	i = 0;
-	while (tokens[i])
-		ft_putendl(tokens[i++]);
 	commands = (void *)0;
 	expand_tokens(tokens, *envp);
 	i = 0;

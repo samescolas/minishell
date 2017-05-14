@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 13:45:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 12:01:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/12 13:21:42 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define MAX_PATHLEN 512
 # define BUFF_SIZE 32
 
-# define DEFAULT_PROMPT "sftsh $>"
-# define DEFAULT_COLOR "\x1B[90m"
+# define DEFAULT_PROMPT "sftsh $"
+# define DEFAULT_COLOR "\x1B[94m"
 
 # define DEF "\x1B[0m"
 # define RED "\x1B[31m"

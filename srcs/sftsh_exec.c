@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 19:27:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/13 21:05:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int			exec_command(t_command *command)
 	prev_handler = signal(SIGINT, ctrl_c_handler);
 	if (command->builtin_id >= 0)
 		return (call_builtin(command));
+	if (command->path == (void *)0)
+		return (1);
 	if ((child_pid = fork()) < 0)
 		return (1);
 	if (child_pid == 0)
@@ -76,7 +78,7 @@ int			sftsh_exec(t_command *commands)
 			status = exec_command(cmd);
 		else
 			inquire(cmd->args[0]);
-		free_command(cmd);
+		//free_command(cmd);
 	}
 	commands = (void *)0;
 	return (status);

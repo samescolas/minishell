@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:08:16 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/13 18:56:38 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_command	*create_command(char **args, char ***envp, int num_args)
 			ret->path = find_executable_path(args[0], *envp);
 		else
 			ret->path = (void *)0;
+		if (ret->path == (void *)0 && ret->builtin_id < 0)
+		{
+			free(ret);
+			ret = (void *)0;
+			return ((void *)0);
+		}
 		ret->num_args = num_args;
 		ret->args = args;
 		ret->envp = envp;
@@ -36,7 +42,7 @@ void		add_command(t_command **queue, t_command *command)
 {
 	t_command	*tmp;
 
-	if (!queue)
+	if (!queue || !command)
 		return ;
 	if (!*queue)
 		*queue = command;
@@ -69,9 +75,13 @@ t_command	*pop_command(t_command **stack)
 
 void		free_command(t_command *command)
 {
-	ft_strarrdel(&(command->args));
-	ft_strdel(&(command->path));
-	free(command->args);
+	if (command->path)
+		ft_strdel(&(command->path));
+	if (command->args)
+	{
+		ft_strarrdel(&(command->args));
+		free(command->args);
+	}
 	command->path = (void *)0;
 	command->args = (void *)0;
 	command->next = (void *)0;

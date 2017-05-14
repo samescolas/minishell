@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:59:11 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/12 16:07:25 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,17 @@ char		*expand_tilde(char *path, char **envp)
 	return (ret);
 }
 
-char		*replace_var(char *orig_str, char *var, int var_len, char **envp)
+char		*replace_var(char *orig_str, char **var, int var_len, char **envp)
 {
 	char	*val;
 	char	*ret;
 	int		i;
 	int		j;
 
-	val = get_env(envp, var);
+	val = get_env(envp, *var);
+	ft_strdel(var);
+	if (!val)
+		return (orig_str);
 	if (!(ret = ft_strnew(ft_strlen(val) + ft_strlen(orig_str) - var_len)))
 		return (orig_str);
 	i = 0;
@@ -66,7 +69,7 @@ char		*replace_var(char *orig_str, char *var, int var_len, char **envp)
 		++i;
 	while (orig_str[i])
 		ret[j++] = orig_str[i++];
-	ft_strdel(&orig_str);
+	ret[j] = '\0';
 	return (ret);
 }
 
@@ -75,9 +78,12 @@ char		*expand_vars(char *str, char **envp)
 	int		var_len;
 	char	*var_start;
 	char	*var;
+	char	*tmp;
 
+	if (ft_strchr(str, '$') == (void *)0)
+		return (str);
 	var_start = str - 1;
-	while ((var_start = ft_strchr(var_start + 1, '$')))
+	while (*(var_start + 1) && (var_start = ft_strchr(var_start + 1, '$')))
 	{
 		var_len = -1;
 		while (var_start[++var_len])
@@ -86,8 +92,10 @@ char		*expand_vars(char *str, char **envp)
 		if (!var_start[1])
 			break ;
 		var = ft_strsub(var_start, 1, var_len - 1);
-		str = replace_var(str, var, var_len - 1, envp);
+		tmp = str;
+		str = replace_var(str, &var, var_len - 1, envp);
 	}
+	tmp = (void *)0;
 	return (str);
 }
 
