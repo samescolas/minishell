@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 19:21:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 11:14:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 12:56:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_next_path(char **paths, char *cmd, int *ix)
 {
 	char	*cmd_str;
 	char	*tmp;
-
+	
 	if (!paths[++(*ix)])
 	{
 		ft_strarrdel(&paths);

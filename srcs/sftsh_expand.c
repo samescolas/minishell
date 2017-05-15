@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 12:05:23 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 13:23:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char		*expand_tilde(char *path, char **envp)
 		return (path);
 	home = get_env(envp, "HOME");
 	len = ft_strlen(home);
-	ret = ft_strnew((ft_strcount(path, '~') * (len - 1)) + ft_strlen(path));
+	ret = ft_strnew((ft_strcount(path, '~') * (len)) + ft_strlen(path));
 	ix[0] = -1;
 	ix[1] = 0;
 	while (path[++(ix[0])])
@@ -96,7 +96,8 @@ char		*expand_vars(char *str, char **envp)
 		tmp = str;
 		ret = replace_var(str, &var, var_len - 1, envp);
 	}
-	ft_strdel(&str);
+	if (ret != str)
+		ft_strdel(&str);
 	tmp = (void *)0;
 	return (ret);
 }
@@ -106,7 +107,7 @@ char		*expand_dots(char *str, char **envp)
 	char	*ret;
 	char	*tmp;
 
-	if (*str && *str != '.')
+	if (str && *str && *str != '.')
 		return (str);
 	if (ft_strcmp(str, ".") == 0)
 	{
@@ -118,8 +119,16 @@ char		*expand_dots(char *str, char **envp)
 	{
 		ret = getcwd((void *)0, MAX_PATHLEN);
 		ft_strdel(&str);
-		tmp = ft_strrchr(ret, '/');
-		*tmp = '\0';
+		if (ft_strcount(ret, '/') == 1)
+		{
+			ft_strdel(&ret);
+			ret = ft_strdup("/");
+		}
+		else
+		{
+			tmp = ft_strrchr(ret, '/');
+			*tmp = '\0';
+		}
 		return (ret);
 	}
 	else
