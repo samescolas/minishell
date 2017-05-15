@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:20:33 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 19:32:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 11:22:56 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ int			sftsh_cd(t_command *cmd)
 			cwd = getcwd((void *)0, MAX_PATHLEN);
 			set_env(*cmd->envp, "OLDPWD", cwd);
 			chdir(path);
-			ft_strdel(&path);
 			ft_strdel(&cwd);
+			cwd = getcwd((void *)0, MAX_PATHLEN);
+			set_env(*cmd->envp, "PWD", cwd);
+			ft_strdel(&cwd);
+			ft_strdel(&path);
 			return (0);
 		}
 		else
