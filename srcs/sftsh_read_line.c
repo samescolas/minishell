@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 17:21:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:38:43 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void		handle_ctrl_c(int sig)
 {
 	g_ctrl_c_pressed = 1;
 	write(1, "\n", 1);
-	signal(SIGINT, handle_ctrl_c);
+	signal(sig, handle_ctrl_c);
 }
 
 int				read_line(char **line)

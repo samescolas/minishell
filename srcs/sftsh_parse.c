@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 11:04:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:38:28 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static void	add_a_command(\
 	int			num_args;
 	int			j;
 	char		**args;
-	char		action;
-	t_command	*cmd;
 
 	num_args = count_args(tokens, *ix);
 	if (!(args = (char **)malloc((num_args + 1) * sizeof(char *))))
@@ -53,7 +51,6 @@ static void	add_a_command(\
 t_command	*parse(char *command, char ***envp)
 {
 	t_command	*commands;
-	t_command	*tmp;
 	char		**tokens;
 	int			i;
 

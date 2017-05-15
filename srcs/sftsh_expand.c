@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 13:23:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:38:02 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char		*expand_vars(char *str, char **envp)
 	char	*tmp;
 	char	*ret;
 
-	if (ft_strchr(str, '$') == (void *)0)
+	if (!(var = ft_strchr(str, '$')) || !(*(var + 1)))
 		return (str);
 	var_start = str - 1;
 	while (*(var_start + 1) && (var_start = ft_strchr(var_start + 1, '$')))
@@ -102,7 +102,7 @@ char		*expand_vars(char *str, char **envp)
 	return (ret);
 }
 
-char		*expand_dots(char *str, char **envp)
+char		*expand_dots(char *str)
 {
 	char	*ret;
 	char	*tmp;
@@ -138,14 +138,13 @@ char		*expand_dots(char *str, char **envp)
 void		expand_tokens(char **tokens, char **envp)
 {
 	char	**tmp;
-	char	*tmp_str;
 
 	tmp = tokens;
 	while (*tmp)
 	{
 		*tmp = expand_tilde(*tmp, envp);
 		*tmp = expand_vars(*tmp, envp);
-		*tmp = expand_dots(*tmp, envp);
+		*tmp = expand_dots(*tmp);
 		++tmp;
 	}
 }

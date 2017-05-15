@@ -12,15 +12,17 @@ LIB_DEPS = $(wildcard libft/*.c$)
 
 CC = gcc
 
+CFLAGS = -Wall -Wextra -Werror
+
 LINK = -L libft -lft
 
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(HEADER) $(LIBFT)
-	$(CC) .objs/*.o $(LINK) -g -o $@
+	$(CC) .objs/*.o $(LINK) -o $@
 
 .objs/%.o : srcs/%.c $(HEADER) $(LIBFT)
-	$(CC) -I includes -c -o $@ $<
+	$(CC) $(CFLAGS) -I includes -c -o $@ $<
 
 $(LIBFT) : $(LIB_DEPS)
 	make -C libft

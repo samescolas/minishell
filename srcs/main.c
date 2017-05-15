@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/08 14:26:50 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:39:26 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int		main(int argc, char **argv, char **envp)
 	struct termios	*default_settings;
 	char			**envp_cpy;
 
+	if (argc > 2 || argv[1])
+	{
+		ft_putendl("sftsh: please start me and type stuff like a human");
+		return (0);
+	}
 	default_settings = sftsh_makeraw();
 	envp_cpy = copy_env(envp);
 	ft_atexit(1, default_settings, &envp_cpy);

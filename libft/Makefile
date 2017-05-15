@@ -6,7 +6,7 @@
 #    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/13 09:59:58 by sescolas          #+#    #+#              #
-#    Updated: 2017/05/05 09:51:26 by sescolas         ###   ########.fr        #
+#    Updated: 2017/05/14 18:24:26 by sescolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ HEADER = libft.h
 SRCS = 	$(wildcard *.c)
 
 OBJS = $(SRCS:.c=.o)
+
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 

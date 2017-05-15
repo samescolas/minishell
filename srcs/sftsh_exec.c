@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 11:13:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:37:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 #include "sftsh_builtins.h"
 #include "minishell.h"
 
-static void	print_error_execve(char *str)
-{
-	write(1, "psh: command not found: ", 24);
-	ft_putendl(str);
-}
-
 static void	ctrl_c_handler(int sig)
 {
-	signal(SIGINT, ctrl_c_handler);
+	signal(sig, ctrl_c_handler);
 }
 
 int			exec_command(t_command *command)
