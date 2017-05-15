@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:37:21 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 19:38:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,26 +77,3 @@ int			sftsh_exec(t_command *commands)
 	commands = (void *)0;
 	return (status);
 }
-/*
-int			sftsh_exec(t_command *commands)
-{
-	int		status;
-
-	if (commands->path && access(commands->path, X_OK) != 0)
-	{
-		ft_putstr("you can't use that: ");
-		ft_putendl(commands->path);
-	}
-	if (commands->builtin_id >= 0 || commands->path)
-		status = exec_command(commands);
-	else
-		inquire(commands->args[0]);
-	commands = commands->next;
-	while (commands && status == 0)
-	{
-		status = exec_command(commands);
-		commands = commands->next;
-	}
-	return (status);
-}
-*/

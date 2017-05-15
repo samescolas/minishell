@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:38:02 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 11:03:25 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char		*expand_vars(char *str, char **envp)
 char		*expand_dots(char *str)
 {
 	char	*ret;
-	char	*tmp;
 
 	if (str && *str && *str != '.')
 		return (str);
@@ -120,15 +119,9 @@ char		*expand_dots(char *str)
 		ret = getcwd((void *)0, MAX_PATHLEN);
 		ft_strdel(&str);
 		if (ft_strcount(ret, '/') == 1)
-		{
-			ft_strdel(&ret);
-			ret = ft_strdup("/");
-		}
+			ret[1] = '\0';
 		else
-		{
-			tmp = ft_strrchr(ret, '/');
-			*tmp = '\0';
-		}
+			ft_strrchr(ret, '/')[0] = '\0';
 		return (ret);
 	}
 	else

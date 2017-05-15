@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:38:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/14 19:54:58 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ static void		resize_buffer(char **line, unsigned int current_size)
 	*line = tmp;
 }
 
-static void		key_bkspc(char *line, unsigned int *chars_copied)
+static void		key_printable(char c, char *line, unsigned int *chars_copied)
 {
 	char	bkspc[3];
 
-	if (*chars_copied == 0)
+	if (c == 127)
+	{
+		if (*chars_copied == 0)
+			return ;
+		bkspc[0] = 8;
+		bkspc[1] = 127;
+		bkspc[2] = 8;
+		line[--(*chars_copied)] = '\0';
+		write(1, bkspc, 3);
 		return ;
-	bkspc[0] = 8;
-	bkspc[1] = 127;
-	bkspc[2] = 8;
-	line[--(*chars_copied)] = '\0';
-	write(1, bkspc, 3);
-}
-
-static void		key_printable(char c, char *line, unsigned int *chars_copied)
-{
+	}
 	if (*chars_copied == 0 && c == ';')
 		return ;
 	write(1, &c, 1);
@@ -65,24 +65,11 @@ int				read_line(char **line)
 	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0 && buf != '\n')
 	{
 		if (g_ctrl_c_pressed)
-		{
-			ft_strdel(line);
-			*line = ft_strnew(BUFF_SIZE);
-			g_ctrl_c_pressed = 0;
-		}
-		if (chars_copied > BUFF_SIZE - 1 && chars_copied % BUFF_SIZE == 0)
+			resize_buffer(line, (g_ctrl_c_pressed = 0));
+		else if (chars_copied > BUFF_SIZE - 1 && chars_copied % BUFF_SIZE == 0)
 			resize_buffer(line, chars_copied);
-		if (ft_isprint(buf) && buf != '\n')
+		if (buf == 127 || (ft_isprint(buf) && buf != '\n'))
 			key_printable(buf, *line, &chars_copied);
-		if (buf == 127)
-			key_bkspc(*line, &chars_copied);
-	}
-	if (g_ctrl_c_pressed)
-	{
-		g_ctrl_c_pressed = 0;
-		free(*line);
-		*line = (void *)0;
-		return (-1);
 	}
 	write(1, "\n", 1);
 	signal(SIGINT, prev_sig_action);

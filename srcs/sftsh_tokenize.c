@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/12 16:11:31 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 10:54:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 #include "sftsh_brackets.h"
 #include "sftsh_tokenize.h"
 
-static void		print_error_message(void)
+static int	print_error(char *str1, char *str2)
 {
-	write(2, "invalid brackets found\n", 23);
-	//exit(0);
+	if (str1)
+		ft_putstr(str1);
+	if (str2)
+		ft_putstr(str2);
+	return (0);
 }
 
-int			count_tokens(char *command)
+static int	count_tokens(char *command)
 {
 	int		num_tokens;
 	char	*ptr;
@@ -31,35 +34,24 @@ int			count_tokens(char *command)
 	num_tokens = 0;
 	while (*ptr)
 	{
-		if (*ptr == '"' || *ptr == '\'')
-		{
-			++num_tokens;
-			if (!ft_strchr(ptr + 1, *ptr))
-			{
-				print_error_message();
-				return (0);
-			}
-			else
-				ptr = ft_strchr(ptr + 1, *ptr) + 1;
-		}
+		++num_tokens;
+		if ((*ptr == '"' || *ptr == '\'') && ft_strchr(ptr + 1, *ptr))
+			ptr = ft_strchr(ptr + 1, *ptr) + 1;
+		else if (*ptr == '"' || *ptr == '\'')
+			return (print_error("sftsh: invalid quotations found\n", NULL));
 		else if (*ptr == ';')
-		{
-			++num_tokens;
 			++ptr;
-		}
 		else
-		{
-			while (*ptr && *ptr != ' ' && *ptr != ';' && *ptr != '"' && *ptr != '\'')
+			while (*ptr &&\
+					*ptr != ' ' && *ptr != ';' && *ptr != '"' && *ptr != '\'')
 				++ptr;
-			++num_tokens;
-		}
 		while (*ptr && *ptr == ' ')
 			++ptr;
 	}
 	return (num_tokens);
 }
 
-char	*add_string(char *start, char delim)
+static char	*add_string(char *start, char delim, char **ptr)
 {
 	int		i;
 	char	*ret;
@@ -67,11 +59,10 @@ char	*add_string(char *start, char delim)
 	i = 0;
 	if (delim == '\0')
 	{
-		if (!ft_strchr(start, ';') && !ft_strchr(start, ' '))
-			return (ft_strdup(start));
 		while (start[i] && start[i] != ' ' && start[i] != ';')
 			++i;
 		ret = ft_strsub(start, 0, i);
+		*ptr = *ptr + i;
 	}
 	else
 	{
@@ -83,11 +74,12 @@ char	*add_string(char *start, char delim)
 			++i;
 		}
 		ret[i] = '\0';
+		*ptr += ft_strfind(start, delim) + 2;
 	}
 	return (ret);
 }
 
-char	**tokenize(char *command)
+char		**tokenize(char *command)
 {
 	char	**ret;
 	char	*ptr;
@@ -104,21 +96,11 @@ char	**tokenize(char *command)
 	while (*ptr)
 	{
 		if (*ptr == '"' || *ptr == '\'')
-		{
-			ret[i++] = add_string(ptr + 1, *ptr);
-			ptr = ft_strchr(ptr + 1, *ptr) + 1;
-		}
+			ret[i++] = add_string(ptr + 1, *ptr, &ptr);
 		else if (*ptr == ';')
-		{
-			ret[i++] = ft_strdup(";");
-			++ptr;
-		}
+			ret[i++] = ft_strndup(ptr++, 1);
 		else
-		{
-			ret[i++] = add_string(ptr, '\0');
-			while (*ptr && *ptr != ' ' && *ptr != ';')
-				++ptr;
-		}
+			ret[i++] = add_string(ptr, '\0', &ptr);
 		while (*ptr && *ptr == ' ')
 			++ptr;
 	}

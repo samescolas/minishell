@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 20:18:51 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 10:51:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcpy(char *dst, const char *src);
 void				ft_strdel(char **as);
 char				*ft_strdup(const char *s1);
+char				*ft_strndup(const char *s1, int n);
 int					ft_strequ(const char *s1, const char *s2);
 int					ft_strfind(char *str, char c);
 void				ft_striter(char *s, void (*f)(char *));
