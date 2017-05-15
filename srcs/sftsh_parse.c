@@ -6,18 +6,15 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:38:28 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:52:23 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "sftsh_expand.h"
-#include "sftsh_exec.h"
-#include "sftsh_builtins.h"
-#include "sftsh_types.h"
 #include "sftsh_parse.h"
+#include "../libft/libft.h"
+#include "sftsh_types.h"
+#include "sftsh_expand.h"
 #include "sftsh_tokenize.h"
-#include "sftsh_atexit.h"
 
 static int	count_args(char **tokens, int ix)
 {

@@ -6,13 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:19:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/15 10:54:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:54:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sftsh_types.h"
-#include "sftsh_brackets.h"
 #include "sftsh_tokenize.h"
+#include "../libft/libft.h"
 
 static int	print_error(char *str1, char *str2)
 {

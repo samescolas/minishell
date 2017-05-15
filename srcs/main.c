@@ -6,16 +6,15 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:39:26 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:21:45 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "sftsh_raw_mode.h"
-#include "sftsh_env.h"
 #include "sftsh.h"
+#include "sftsh_env.h"
 #include "sftsh_atexit.h"
-#include <signal.h>
+#include "sftsh_raw_mode.h"
 
 int		main(int argc, char **argv, char **envp)
 {
@@ -24,7 +23,7 @@ int		main(int argc, char **argv, char **envp)
 
 	if (argc > 2 || argv[1])
 	{
-		ft_putendl("sftsh: please start me and type stuff like a human");
+		write(1, "sftsh: please start me and type stuff like a human\n", 51);
 		return (0);
 	}
 	default_settings = sftsh_makeraw();

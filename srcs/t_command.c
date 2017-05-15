@@ -6,13 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 10:38:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:57:54 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sftsh_types.h"
 #include "../libft/libft.h"
 #include "sftsh_builtins.h"
-#include "sftsh_types.h"
+#include "sftsh_find_executable.h"
 
 t_command	*create_command(char **args, char ***envp, int num_args)
 {
@@ -90,13 +91,4 @@ void		free_command(t_command *command)
 	command->next = (void *)0;
 	command->num_args = 0;
 	free(command);
-}
-
-void		free_commands(t_command **stack)
-{
-	t_command	*tmp;
-
-	while ((tmp = pop_command(stack)))
-		free_command(tmp);
-	*stack = (void *)0;
 }

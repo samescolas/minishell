@@ -6,18 +6,15 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:20:33 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/15 11:22:56 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 13:04:22 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "sftsh_types.h"
-#include "sftsh_expand.h"
+#include "builtin_cd.h"
 #include "sftsh_env.h"
-#include <stdarg.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <sys/stat.h>
+#include "sftsh_types.h"
+#include "sftsh_vars.h"
+#include "../libft/libft.h"
 
 static int	sftsh_cd_err(int num_args, ...)
 {
@@ -93,8 +90,7 @@ int			sftsh_cd(t_command *cmd)
 			cwd = getcwd((void *)0, MAX_PATHLEN);
 			set_env(*cmd->envp, "OLDPWD", cwd);
 			chdir(path);
-			ft_strdel(&cwd);
-			cwd = getcwd((void *)0, MAX_PATHLEN);
+			getcwd(cwd, MAX_PATHLEN);
 			set_env(*cmd->envp, "PWD", cwd);
 			ft_strdel(&cwd);
 			ft_strdel(&path);

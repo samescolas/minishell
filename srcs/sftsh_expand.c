@@ -6,14 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:43:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/15 11:03:25 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:48:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "sftsh_env.h"
+#include "sftsh_vars.h"
 #include "sftsh_expand.h"
-#include "minishell.h"
 
 char		*expand_tilde(char *path, char **envp)
 {
@@ -44,7 +44,7 @@ char		*expand_tilde(char *path, char **envp)
 	return (ret);
 }
 
-char		*replace_var(char *orig_str, char **var, int var_len, char **envp)
+static char	*replace_var(char *orig_str, char **var, int var_len, char **envp)
 {
 	char	*val;
 	char	*ret;

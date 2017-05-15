@@ -6,11 +6,11 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:30:15 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:31:16 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:19:26 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "sftsh_types.h"
 #include "sftsh_atexit.h"
 
 int		sftsh_exit(t_command *command)

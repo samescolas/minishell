@@ -6,15 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 19:21:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 19:40:48 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:50:42 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "sftsh_find_executable.h"
 #include "../libft/libft.h"
 #include "sftsh_env.h"
-#include <sys/types.h>
-#include <sys/stat.h>
+#include "sftsh_vars.h"
 
 static char	*check_current_directory(char *cmd)
 {

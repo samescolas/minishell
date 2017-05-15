@@ -6,13 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 19:54:58 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:55:30 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sftsh_read_line.h"
-#include "minishell.h"
-#include <stdio.h>
+#include "../libft/libft.h"
+#include "sftsh_vars.h"
 
 static void		resize_buffer(char **line, unsigned int current_size)
 {

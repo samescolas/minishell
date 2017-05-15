@@ -6,18 +6,19 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 20:26:25 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 13:21:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:19:13 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "sftsh_types.h"
 
 int		sftsh_echo(t_command *command)
 {
 	int		no_newline;
 	int		ix;
 
-	if (command->num_args == 0)
+	if (command->num_args <= 1)
 	{
 		write(1, "\n", 1);
 		return (0);

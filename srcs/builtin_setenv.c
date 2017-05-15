@@ -6,11 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 19:31:04 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 12:28:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:16:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "sftsh_types.h"
 #include "sftsh_env.h"
 
 int		sftsh_setenv(t_command *command)

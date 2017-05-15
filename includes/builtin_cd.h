@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sftsh_brackets.h                                   :+:      :+:    :+:   */
+/*   builtin_cd.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/12 20:27:06 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 17:29:51 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/15 12:10:09 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/15 13:06:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SFTSH_BRACKETS_H
-# define SFTSH_BRACKETS_H
+#ifndef BUILTIN_CD_H
+# define BUILTIN_CD_H
 
-# define MAX_DEPTH 32
+# include <stdarg.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
-int		valid_brackets(char *str);
-int		is_close_bracket(char c);
-int		is_open_bracket(char c);
-int		is_bracket(char c);
+typedef struct s_command	t_command;
+
+int		sftsh_cd(t_command *cmd);
 
 #endif

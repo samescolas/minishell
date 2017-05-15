@@ -6,16 +6,16 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/13 21:05:46 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 13:02:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "sftsh.h"
+#include "../libft/libft.h"
+#include "sftsh_vars.h"
 #include "sftsh_read_line.h"
 #include "sftsh_parse.h"
-#include "sftsh_types.h"
 #include "sftsh_exec.h"
-#include "sftsh.h"
 
 static char	*input(char *prompt[3])
 {

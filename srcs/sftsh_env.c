@@ -6,11 +6,11 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 12:36:34 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 12:29:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:19:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft/libft.h"
 #include "sftsh_env.h"
 
 char	*get_env(char **envp, char *val)

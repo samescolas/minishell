@@ -6,11 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 12:02:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 18:32:08 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:17:04 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "sftsh_types.h"
 #include "sftsh_env.h"
 
 static int	ft_in(char *str, char **arr, int arr_size)

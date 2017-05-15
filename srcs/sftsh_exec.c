@@ -6,14 +6,14 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 19:49:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/14 19:38:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:47:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include "sftsh_exec.h"
 #include "sftsh_types.h"
 #include "sftsh_builtins.h"
-#include "minishell.h"
 
 static void	ctrl_c_handler(int sig)
 {

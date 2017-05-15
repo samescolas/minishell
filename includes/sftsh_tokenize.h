@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:16:27 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 12:56:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:54:25 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "../libft/libft.h"
 
 char	**tokenize(char *command);
 
