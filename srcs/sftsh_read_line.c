@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/15 12:55:30 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/26 10:28:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,17 @@ int				read_line(char **line)
 	*line = ft_strnew(BUFF_SIZE);
 	chars_copied = 0;
 	prev_sig_action = signal(SIGINT, handle_ctrl_c);
-	while ((ret = read(STDIN_FILENO, &buf, 1)) > 0 && buf != '\n')
+	while ((ret = read(STDIN_FILENO, &buf, 1)) >= 0 && buf != '\n')
 	{
+		if (!buf)
+			continue ;
 		if (g_ctrl_c_pressed)
 			resize_buffer(line, (g_ctrl_c_pressed = 0));
 		else if (chars_copied > BUFF_SIZE - 1 && chars_copied % BUFF_SIZE == 0)
 			resize_buffer(line, chars_copied);
 		if (buf == 127 || (ft_isprint(buf) && buf != '\n'))
 			key_printable(buf, *line, &chars_copied);
+		buf = '\0';
 	}
 	write(1, "\n", 1);
 	signal(SIGINT, prev_sig_action);
